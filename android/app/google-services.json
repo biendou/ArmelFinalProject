@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "169837167627",
+    "project_id": "awesomeproject3-9258e",
+    "storage_bucket": "awesomeproject3-9258e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169837167627:android:ee28f1fdb5eb0364ff730e",
+        "android_client_info": {
+          "package_name": "com.armelfinalproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169837167627-anrkabl30vh12jl2sa2s67o1mtbf9c2d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAW0dahVIRMD8oEqMcca76yBlZZkfz0HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169837167627-anrkabl30vh12jl2sa2s67o1mtbf9c2d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "169837167627-bij4fp1jaqueipmeh2mvt8q3lrdva3ju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.AwesomeProject3"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169837167627:android:2b5c4d1312c8fecfff730e",
+        "android_client_info": {
+          "package_name": "com.itcbatchjuly26.androidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169837167627-anrkabl30vh12jl2sa2s67o1mtbf9c2d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAW0dahVIRMD8oEqMcca76yBlZZkfz0HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169837167627-anrkabl30vh12jl2sa2s67o1mtbf9c2d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "169837167627-bij4fp1jaqueipmeh2mvt8q3lrdva3ju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.AwesomeProject3"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

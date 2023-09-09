@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+import {login as loginapi} from '../../api';
+import {Localization} from '../../helpers';
 
 const login = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -13,29 +15,35 @@ const login = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>This is the login page</Text>
+      <Text style={styles.text}>{Localization.t('thisistheloginpage')}</Text>
       <TextInput
         placeholderTextColor={'black'}
-        placeholder={'enter your email ...'}
+        placeholder={Localization.t('enteremail')}
         style={styles.textinput}
         onChange={setEmail}
       />
       <TextInput
         placeholderTextColor={'black'}
-        placeholder={'enter your password'}
+        placeholder={Localization.t('enterpassword')}
         style={styles.textinput}
         onChange={setPassword}
       />
       <TouchableOpacity
         style={[styles.button, {backgroundColor: 'yellow'}]}
-        onPress={() => {}}>
-        <Text style={[styles.text, {fontSize: 20}]}>login</Text>
+        onPress={() => {
+          loginapi(email, password);
+        }}>
+        <Text style={[styles.text, {fontSize: 20}]}>
+          {Localization.t('login')}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Signup')}>
-        <Text style={[styles.text, {fontSize: 20}]}>Go to Signup</Text>
+        onPress={() => navigation.navigate(Localization.t('signup'))}>
+        <Text style={[styles.text, {fontSize: 20}]}>
+          {Localization.t('gotosignup')}
+        </Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
