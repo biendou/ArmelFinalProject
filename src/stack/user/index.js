@@ -60,7 +60,11 @@ const App = () => {
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name={Localization.t('home')} component={Home} />
+      <Drawer.Screen
+        name={Localization.t('home')}
+        component={Home}
+        options={{headerShown: false}}
+      />
       <Drawer.Screen name={Localization.t('myplace')} component={Myplace} />
     </Drawer.Navigator>
   );
