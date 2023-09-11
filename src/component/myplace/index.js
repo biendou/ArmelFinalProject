@@ -11,14 +11,17 @@ import React, {useState, useEffect} from 'react';
 import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 
 function NotificationsScreen({navigation}) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [users, setUsers] = useState([]); // Initial empty array of users
-
+  const user = JSON.parse(useSelector(state => state?.userR?.userID));
+  console.log('heo', user?.uid);
   useEffect(() => {
     const subscriber = firestore()
       .collection('UserMyPlaces')
+      .where('userID', '==', user?.uid)
       .onSnapshot(querySnapshot => {
         const users = [];
 
@@ -45,21 +48,25 @@ function NotificationsScreen({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       {/* <Button onPress={() => navigation.goBack()} title="Go back home" /> */}
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <Text style={styles.text}>placeName </Text>
         <Text style={styles.text}>Latitude: </Text>
         <Text style={styles.text}>Longitude: </Text>
         <Text style={styles.text}>userId: </Text>
-      </View>
+      </View> */}
       <View Style={{backgroundColor: 'red', flex: 1}}>
         <FlatList
           data={users}
           renderItem={({item}) => (
-            <View style={styles.container}>
-              <Text style={styles.text}>placeName: {item.name}</Text>
-              <Text style={styles.text}>Latitude: {item.latitude}</Text>
-              <Text style={styles.text}>Longitude: {item.longitude}</Text>
-              <Text style={styles.text}>userId: {item.name}</Text>
+            <View style={styles.card}>
+              <Text style={styles.title}>{item.placeName}</Text>
+              <Text style={styles.description}>
+                Latitude: {item.latitude.toFixed(5)}
+              </Text>
+              <Text style={styles.description}>
+                Longitude: {item.longitude.toFixed(5)}
+              </Text>
+              <Text style={styles.description}>{item.userName}</Text>
             </View>
           )}
         />
@@ -101,6 +108,23 @@ styles = StyleSheet.create({
   },
   text: {
     color: 'black',
+    fontSize: 20,
+  },
+  card: {
+    backgroundColor: 'bisque',
+    elevation: 4, // Add elevation for a shadow effect
+    padding: 16,
+    margin: 8,
+    borderRadius: 8,
+  },
+  title: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 14,
+    color: '#777',
   },
 });
 export default NotificationsScreen;

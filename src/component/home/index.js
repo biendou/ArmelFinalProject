@@ -13,6 +13,7 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
+
 const postdata = (data, user) => {
   firestore()
     .collection('UserMyPlaces')
