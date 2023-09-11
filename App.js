@@ -5,15 +5,29 @@ import {Home, User} from './src/stack';
 import auth from '@react-native-firebase/auth';
 
 import {Localization} from './src/helpers';
+import store from './src/redux/store';
+import {Provider} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {setUserID} from './src/redux/slices/userslice';
 
 const App = () => {
+  return (
+    <Provider store={store}>
+      <Main />
+    </Provider>
+  );
+};
+
+const Main = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const dispatch = useDispatch();
 
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
-    console.log(user);
+    // console.log(user);
+    dispatch(setUserID(JSON.stringify(user)));
     if (initializing) setInitializing(false);
   }
 
@@ -28,7 +42,6 @@ const App = () => {
   if (initializing) return null;
 
   return (
-    //   <Home />
     <NavigationContainer>{!user ? <Home /> : <User />}</NavigationContainer>
   );
 };

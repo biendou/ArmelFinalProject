@@ -17,6 +17,10 @@ const i18n = new I18n({
     home: 'Home',
     myplace: 'My Place',
     language: 'EN',
+    Enterlocation: 'Enter Location',
+    additem: 'Add Item',
+    pleaseselectalocation: 'Please select a location',
+    Placeaddedsuccessfully: 'Place added successfully',
   },
   fr: {
     hello: 'Bonjour',
@@ -34,6 +38,10 @@ const i18n = new I18n({
     home: 'Accueil',
     myplace: 'Mes endroits',
     language: 'FR',
+    Enterlocation: "Entrer l'emplacement",
+    additem: 'Ajouter un élément',
+    pleaseselectalocation: 'Veuillez sélectionner un emplacement',
+    Placeaddedsuccessfully: 'Lieu ajouté avec succès',
   },
 });
 
