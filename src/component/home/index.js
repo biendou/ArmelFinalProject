@@ -13,6 +13,11 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
+import {getCurrentPosition} from '../../helpers/geolocation';
+import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+
+import mapMarkers from './markers';
+import {Marker} from 'react-native-maps';
 
 const postdata = (data, user) => {
   firestore()
@@ -35,6 +40,7 @@ const postdata = (data, user) => {
 
 function HomeScreen({navigation}) {
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
+  const [position, setPosition] = useState(null);
   // console.log('heo', user?.uid);
   const [location, setLocation] = useState({
     latitude: 37.78825,
@@ -46,15 +52,46 @@ function HomeScreen({navigation}) {
   const ref = useRef();
 
   useEffect(() => {
+    const subscriber = firestore()
+      .collection('UsersPosition')
+      .onSnapshot(querySnapshot => {
+        const positions = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          positions.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+        setPosition(positions);
+        console.log('=======>', positions);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
+
+  useEffect(() => {
     ref.current?.setAddressText('');
+    const echo = setInterval(() => {
+      getCurrentPosition(user?.uid);
+    }, 10000);
+    // getCurrentPosition();
+    // getCurrentPosition().then(position => {
+    //   setLocation({
+    //     latitude: position.coords.latitude,
+    //     longitude: position.coords.longitude,
+    //     latitudeDelta: 0.015,
+    //     longitudeDelta: 0.0121,
+    //   });
+    // });
   }, []);
 
   return (
     <View style={{flex: 1}}>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        region={location}></MapView>
+      <MapView provider={PROVIDER_GOOGLE} style={styles.map} region={location}>
+        {position ? mapMarkers(position) : mapMarkers()}
+      </MapView>
       <View style={styles.organizer}>
         <View style={{flexDirection: 'row', backgroundColor: 'black'}}>
           <TouchableOpacity

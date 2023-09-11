@@ -9,8 +9,15 @@ import store from './src/redux/store';
 import {Provider} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {setUserID} from './src/redux/slices/userslice';
+import {checkPermission, requestPermission} from './src/helpers/permissions';
 
 const App = () => {
+  useEffect(() => {
+    checkPermission('android.permission.ACCESS_FINE_LOCATION');
+    checkPermission('android.permission.ACCESS_COARSE_LOCATION');
+    requestPermission('android.permission.ACCESS_FINE_LOCATION');
+    requestPermission('android.permission.ACCESS_COARSE_LOCATION');
+  }, []);
   return (
     <Provider store={store}>
       <Main />
