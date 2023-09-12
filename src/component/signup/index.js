@@ -1,10 +1,11 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {signup as signupapi} from '../../api';
 import {Localization} from '../../helpers';
@@ -17,18 +18,23 @@ function generateRandomCredentials() {
 }
 
 const signup = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  let dummyCredentials = generateRandomCredentials();
+
+  const [email, setEmail] = useState(dummyCredentials.email);
+  const [password, setPassword] = useState(dummyCredentials.password);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>{Localization.t('thisistheSignuppage')}</Text>
       <TextInput
+        value={email}
         placeholderTextColor={'black'}
         placeholder={Localization.t('enteremail')}
         style={styles.textinput}
         onChange={setEmail}
       />
       <TextInput
+        value={password}
         placeholderTextColor={'black'}
         placeholder={Localization.t('enterpassword')}
         style={styles.textinput}
@@ -37,9 +43,21 @@ const signup = ({navigation}) => {
       <TouchableOpacity
         style={[styles.button, {backgroundColor: 'yellow'}]}
         onPress={() => {
-          const x = generateRandomCredentials();
-          console.log(x.email, x.password);
-          signupapi(x.email, x.password);
+          if (!email || !password) {
+            ToastAndroid.show(
+              'Email and  Password is required.',
+              ToastAndroid.SHORT,
+            );
+            // errors.email = 'Email is required.';
+          } else if (!/\S+@\S+\.\S+/.test(email) || password.length < 6) {
+            // errors.email = 'Email is invalid.';
+            ToastAndroid.show(
+              'Email or password is invalid, Please check your entries.',
+              ToastAndroid.SHORT,
+            );
+          } else {
+            signupapi(email, password);
+          }
         }}>
         <Text style={[styles.text, {fontSize: 20}]}>
           {Localization.t('signup')}

@@ -76,6 +76,9 @@ function HomeScreen({navigation}) {
     const echo = setInterval(() => {
       getCurrentPosition(user?.uid);
     }, 10000);
+    return () => {
+      clearInterval(echo);
+    };
     // getCurrentPosition();
     // getCurrentPosition().then(position => {
     //   setLocation({

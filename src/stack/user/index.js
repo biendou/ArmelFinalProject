@@ -11,18 +11,25 @@ import {Myplace, Home} from '../../component';
 import {logout} from '../../api';
 import {Localization} from '../../helpers';
 
+// configuration of redux for language selector
+import {useDispatch, useSelector} from 'react-redux';
+import {setLang} from '../../redux/slices/langslice';
+
 const Logout = ({navigation}) => {
   navigation.goBack();
 };
 
 function CustomDrawerContent(props) {
-  const [update, setUpdate] = React.useState(false);
+  // const [update, setUpdate] = React.useState(false);
+  const dispatch = useDispatch();
   const LocalizationUpdate = () => {
-    setUpdate(!update);
+    // setUpdate(!update);
     if (Localization.locale === 'en') {
       Localization.locale = 'fr';
+      dispatch(setLang('fr'));
     } else {
       Localization.locale = 'en';
+      dispatch(setLang('en'));
     }
     console.log('hello');
   };

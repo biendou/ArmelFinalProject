@@ -25,20 +25,20 @@ const mapMarkers = (
 ) => {
   return markers.map((marker, index) => (
     <Marker
-      style={{width: 100, height: 100, backgroundColor: 'red'}}
+      // style={{width: 100, height: 100, backgroundColor: 'red'}}
       key={index}
       coordinate={{latitude: marker.lat, longitude: marker.lng}}
       title={marker.title}
       description={marker.description}>
-      <View
+      {/* <View
         style={{
           width: 40,
           height: 40,
-          borderRadius: 20,
+          borderRadius: 40,
           backgroundColor: 'red',
         }}>
         <Text>a</Text>
-      </View>
+      </View> */}
     </Marker>
   ));
 };
