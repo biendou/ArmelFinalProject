@@ -11,17 +11,17 @@ function UserDetailsStack() {
       <Stack.Screen
         name={Localization.t('userView')}
         component={UserView}
-        // options={{headerShown: false}}
+        options={{unmountOnBlur: true}}
       />
       <Stack.Screen
         name={Localization.t('FavoritePlaces')}
         component={FavoritePlaces}
-        // options={{headerShown: false}}
+        options={{unmountOnBlur: true}}
       />
       <Stack.Screen
         name={Localization.t('favoritemap')}
         component={Favoritemap}
-        // options={{headerShown: false}}
+        options={{unmountOnBlur: true}}
       />
     </Stack.Navigator>
   );

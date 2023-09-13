@@ -72,13 +72,13 @@ const App = () => {
       <Drawer.Screen
         name={Localization.t('home')}
         component={Home}
-        options={{headerShown: false}}
+        options={{headerShown: false, unmountOnBlur: true}}
       />
       <Drawer.Screen name={Localization.t('myplace')} component={Myplace} />
       <Drawer.Screen
         name={Localization.t('UserDetails')}
         component={UserDetails}
-        options={{headerShown: false}}
+        options={{headerShown: false, unmountOnBlur: true}}
       />
     </Drawer.Navigator>
   );

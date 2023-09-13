@@ -84,7 +84,10 @@ const postdata = (data, user) => {
 };
 
 function HomeScreen({navigation}) {
+  /// user import from redux
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
+  // console.log('#################################', user.uid ? user.uid : user);
+  // variable declaration
   const [position, setPosition] = useState(null);
   const [location, setLocation] = useState({
     latitude: 37.78825,
@@ -109,7 +112,6 @@ function HomeScreen({navigation}) {
     ///
     const subscriber = firestore()
       .collection('UsersPosition')
-      .where('userId', '==', user?.uid)
       .onSnapshot(querySnapshot => {
         const positions = [];
 
@@ -119,6 +121,7 @@ function HomeScreen({navigation}) {
             key: documentSnapshot.id,
           });
         });
+
         setPosition(positions);
         console.log('=======>', positions);
       });
@@ -127,16 +130,16 @@ function HomeScreen({navigation}) {
     return () => subscriber();
   }, []);
 
-  // useEffect(() => {
-  //   ref.current?.setAddressText('');
-  //   const echo = setInterval(() => {
-  //     getCurrentPosition(user?.uid);
-  //   }, 10000);
-  //   return () => {
-  //     clearInterval(echo);
-  //   };
-
-  // }, []);
+  useEffect(() => {
+    // ref.current.setAddressText('');
+    const echo = setInterval(() => {
+      // console.log('#################################', user.uid);
+      getCurrentPosition(user?.uid);
+    }, 1000);
+    return () => {
+      clearInterval(echo);
+    };
+  }, []);
 
   return (
     <View style={{flex: 1}}>
@@ -160,7 +163,6 @@ function HomeScreen({navigation}) {
             <Text style={{color: 'white'}}>!</Text>
           </TouchableOpacity>
           <GooglePlacesAutocomplete
-            ref={ref}
             textInputProps={{
               placeholderTextColor: 'black',
             }}

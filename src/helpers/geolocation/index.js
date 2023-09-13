@@ -8,11 +8,14 @@ const getCurrentPosition = userID => {
       console.log(position);
       firestore()
         .collection('UsersPosition')
-        .doc(userID)
+        .doc('userIdBiendouYepdieu')
         .set({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-          timestamp: position.timestamp,
+          currentLatitude: position.coords.latitude,
+          currentLongitude: position.coords.longitude,
+          locationTime: position.timestamp,
+          userId: userID ? userID : 'error',
+          speed: 0,
+          userName: 'Biendou',
         })
         .then(() => {
           console.log('User position added!');

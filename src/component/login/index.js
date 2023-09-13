@@ -26,7 +26,7 @@ const Login = ({navigation}) => {
         placeholder={Localization.t('enteremail')}
         style={styles.textinput}
         onChange={setEmail}
-        autoCapitalize="false"
+        // autoCapitalize="false"
         // clearTextOnFocus="true"
       />
       <TextInput
@@ -35,7 +35,7 @@ const Login = ({navigation}) => {
         placeholder={Localization.t('enterpassword')}
         style={styles.textinput}
         onChange={setPassword}
-        autoCapitalize="false"
+        // autoCapitalize="false"
         secureTextEntry={true}
         // clearTextOnFocus="true"
       />

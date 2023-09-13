@@ -4,22 +4,22 @@ import {View, Text} from 'react-native';
 const mapMarkers = (
   markers = [
     {
-      lat: 48.858844,
-      lng: 2.294351, // Eiffel Tower
-      title: 'Eiffel Tower',
-      description: 'A famous monument in Paris, France',
+      currentLatitude: 48.858844,
+      currentLongitude: 2.294351, // Eiffel Tower
+      author: 'Eiffel Tower',
+      userName: 'A famous monument in Paris, France',
     },
     {
-      lat: 40.431908,
-      lng: 116.570375, // Great Wall of China
-      title: 'Great Wall of China',
-      description: 'An iconic wall in China',
+      currentLatitude: 40.431908,
+      currentLongitude: 116.570375, // Great Wall of China
+      author: 'Great Wall of China',
+      userName: 'An iconic wall in China',
     },
     {
-      lat: 27.175015,
-      lng: 78.042155, // Taj Mahal
-      title: 'Taj Mahal',
-      description: 'A beautiful mausoleum in India',
+      currentLatitude: 27.175015,
+      currentLongitude: 78.042155, // Taj Mahal
+      author: 'Taj Mahal',
+      userName: 'A beautiful mausoleum in India',
     },
   ],
 ) => {
@@ -27,9 +27,14 @@ const mapMarkers = (
     <Marker
       // style={{width: 100, height: 100, backgroundColor: 'red'}}
       key={index}
-      coordinate={{latitude: marker.lat, longitude: marker.lng}}
-      title={marker.title}
-      description={marker.description}>
+      coordinate={{
+        latitude: marker.currentLatitude ? marker.currentLatitude : index * 10,
+        longitude: marker.currentLongitude
+          ? marker.currentLongitude
+          : index * 10,
+      }}
+      title={marker.author}
+      description={marker.userName}>
       {/* <View
         style={{
           width: 40,

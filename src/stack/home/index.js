@@ -10,12 +10,12 @@ function home() {
       <Stack.Screen
         name={Localization.t('login')}
         component={Login}
-        options={{headerShown: false}}
+        options={{headerShown: false, unmountOnBlur: true}}
       />
       <Stack.Screen
         name={Localization.t('signup')}
         component={Signup}
-        options={{headerShown: false}}
+        options={{headerShown: false, unmountOnBlur: true}}
       />
     </Stack.Navigator>
   );
