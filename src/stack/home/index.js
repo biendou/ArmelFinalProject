@@ -7,8 +7,16 @@ const Stack = createNativeStackNavigator();
 function home() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={Localization.t('login')} component={Login} />
-      <Stack.Screen name={Localization.t('signup')} component={Signup} />
+      <Stack.Screen
+        name={Localization.t('login')}
+        component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={Localization.t('signup')}
+        component={Signup}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

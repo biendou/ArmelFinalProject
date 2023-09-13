@@ -1,7 +1,7 @@
 import {
   View,
   Text,
-  Button,
+  TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
   FlatList,
@@ -10,10 +10,9 @@ import {
 import React, {useState, useEffect} from 'react';
 import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 
-function NotificationsScreen({navigation}) {
+function UserView({navigation}) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [users, setUsers] = useState([]); // Initial empty array of users
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
@@ -21,19 +20,27 @@ function NotificationsScreen({navigation}) {
   useEffect(() => {
     const subscriber = firestore()
       .collection('UserMyPlaces')
-      .where('userId', '==', user?.uid)
       .onSnapshot(querySnapshot => {
-        const users = [];
+        const data = [];
 
         querySnapshot.forEach(documentSnapshot => {
-          users.push({
+          data.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
           });
         });
 
-        setUsers(users);
-        console.log(users);
+        const userID = [];
+        const Items = [];
+        data.forEach(item => {
+          if (!userID.includes(item.userId)) {
+            userID.push(item.userId);
+            Items.push(item);
+          }
+        });
+
+        setUsers(Items);
+        console.log(userID);
         setLoading(false);
       });
 
@@ -59,21 +66,31 @@ function NotificationsScreen({navigation}) {
           data={users}
           renderItem={({item}) => (
             <View style={styles.card}>
-              <Text style={styles.title}>{item.placeName}</Text>
-              <Text style={styles.description}>
+              <TouchableOpacity
+                onPress={() => {
+                  /* 1. Navigate to the Details route with params */
+                  navigation.navigate(Localization.t('FavoritePlaces'), {
+                    Item: item,
+                    otherParam: 'anything you want here',
+                  });
+                }}>
+                <Text style={styles.title}>{item.userId}</Text>
+                <Text style={styles.title}>{item.userName}</Text>
+                {/* <Text style={styles.description}>
                 Latitude: {item.latitude.toFixed(5)}
               </Text>
               <Text style={styles.description}>
                 Longitude: {item.longitude.toFixed(5)}
               </Text>
-              <Text style={styles.description}>{item.userName}</Text>
+              <Text style={styles.description}>{item.userName}</Text> */}
+              </TouchableOpacity>
             </View>
           )}
         />
         <TouchableOpacity
           style={styles.add}
-          onPress={() => navigation.navigate(Localization.t('home'))}>
-          <Text style={styles.text}>{Localization.t('additem')}</Text>
+          onPress={() => navigation.toggleDrawer()}>
+          <Text style={styles.text}>{Localization.t('goback')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -127,4 +144,4 @@ styles = StyleSheet.create({
     color: '#777',
   },
 });
-export default NotificationsScreen;
+export default UserView;

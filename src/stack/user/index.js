@@ -15,6 +15,8 @@ import {Localization} from '../../helpers';
 import {useDispatch, useSelector} from 'react-redux';
 import {setLang} from '../../redux/slices/langslice';
 
+import {UserDetails} from '../';
+
 const Logout = ({navigation}) => {
   navigation.goBack();
 };
@@ -73,6 +75,11 @@ const App = () => {
         options={{headerShown: false}}
       />
       <Drawer.Screen name={Localization.t('myplace')} component={Myplace} />
+      <Drawer.Screen
+        name={Localization.t('UserDetails')}
+        component={UserDetails}
+        options={{headerShown: false}}
+      />
     </Drawer.Navigator>
   );
 };

@@ -19,7 +19,7 @@ import {setUserID} from './src/redux/slices/userslice';
 // import to use redux slice Lang
 import {setLangToogler} from './src/redux/slices/langslice';
 import {checkPermission, requestPermission} from './src/helpers/permissions';
-
+import Video from './src/component/video';
 const App = () => {
   useEffect(() => {
     checkPermission('android.permission.ACCESS_FINE_LOCATION');
@@ -30,6 +30,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Main />
+      {/* <Video /> */}
     </Provider>
   );
 };

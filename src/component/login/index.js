@@ -10,13 +10,15 @@ import {
 import {login as loginapi} from '../../api';
 import {Localization} from '../../helpers';
 import {useSelector} from 'react-redux';
+import Video from '../video';
 
-const login = ({navigation}) => {
+const Login = ({navigation}) => {
   const [email, setEmail] = useState('biendou@example.com'); //
   const [password, setPassword] = useState('SuperSecretPassword!'); //'SuperSecretPassword!'
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* <Video /> */}
       <Text style={styles.text}>{Localization.t('thisistheloginpage')}</Text>
       <TextInput
         value={email}
@@ -98,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default login;
+export default Login;

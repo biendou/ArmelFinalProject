@@ -19,15 +19,60 @@ import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import mapMarkers from './markers';
 import {Marker} from 'react-native-maps';
 
+// const createDummyData = id => {
+//   // Generate a random user ID.
+//   const userID = id; //Math.floor(Math.random() * 10);
+
+//   // Generate a random user name.
+//   const userName = `user_${userID}@gmail.com`;
+
+//   // Generate a random longitude.
+//   const longitude = Math.floor(Math.random() * 180) - 90;
+
+//   // Generate a random latitude.
+//   const latitude = Math.floor(Math.random() * 90) - 45;
+
+//   // Generate a random place name.
+//   const placeName = `Place_${userID}`;
+
+//   // Create the dummy data.
+//   const dummyData = {
+//     userID: userID,
+//     userName: userName,
+//     longitude: longitude,
+//     latitude: latitude,
+//     placeName: placeName,
+//     author: 'Biendou',
+//   };
+
+//   return dummyData;
+// };
+// const postdatadummy = data => {
+//   firestore()
+//     .collection('Test')
+//     .add({
+//       userId: data?.userID,
+//       userName: data?.userName,
+//       longitude: data.longitude,
+//       latitude: data.latitude,
+//       placeName: data.placeName,
+//       author: 'Biendou',
+//     })
+//     .then(() => {
+//       console.log('dummy added!', data.userName);
+//     });
+// };
+
 const postdata = (data, user) => {
   firestore()
     .collection('UserMyPlaces')
     .add({
-      userID: user?.uid,
+      userId: user?.uid,
       userName: user?.email,
       longitude: data.lng,
       latitude: data.lat,
       placeName: data.main_text,
+      author: 'Biendou',
     })
     .then(() => {
       ToastAndroid.show(
@@ -41,7 +86,6 @@ const postdata = (data, user) => {
 function HomeScreen({navigation}) {
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
   const [position, setPosition] = useState(null);
-  // console.log('heo', user?.uid);
   const [location, setLocation] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -52,8 +96,20 @@ function HomeScreen({navigation}) {
   const ref = useRef();
 
   useEffect(() => {
+    // const filler = () => {
+    //   for (let x = 0; x < 6; x++) {
+    //     let j = Math.floor(Math.random() * 10);
+    //     let pion = createDummyData(x);
+    //     for (let i = 0; i < j; i++) {
+    //       postdatadummy(pion);
+    //     }
+    //   }
+    // };
+    // filler(); //          <----------------- uncomment this to fill the database with dummy data
+    ///
     const subscriber = firestore()
       .collection('UsersPosition')
+      .where('userId', '==', user?.uid)
       .onSnapshot(querySnapshot => {
         const positions = [];
 
@@ -71,24 +127,16 @@ function HomeScreen({navigation}) {
     return () => subscriber();
   }, []);
 
-  useEffect(() => {
-    ref.current?.setAddressText('');
-    const echo = setInterval(() => {
-      getCurrentPosition(user?.uid);
-    }, 10000);
-    return () => {
-      clearInterval(echo);
-    };
-    // getCurrentPosition();
-    // getCurrentPosition().then(position => {
-    //   setLocation({
-    //     latitude: position.coords.latitude,
-    //     longitude: position.coords.longitude,
-    //     latitudeDelta: 0.015,
-    //     longitudeDelta: 0.0121,
-    //   });
-    // });
-  }, []);
+  // useEffect(() => {
+  //   ref.current?.setAddressText('');
+  //   const echo = setInterval(() => {
+  //     getCurrentPosition(user?.uid);
+  //   }, 10000);
+  //   return () => {
+  //     clearInterval(echo);
+  //   };
+
+  // }, []);
 
   return (
     <View style={{flex: 1}}>

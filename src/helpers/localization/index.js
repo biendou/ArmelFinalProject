@@ -21,6 +21,11 @@ const i18n = new I18n({
     additem: 'Add Item',
     pleaseselectalocation: 'Please select a location',
     Placeaddedsuccessfully: 'Place added successfully',
+    userView: 'User View',
+    FavoritePlaces: 'Favorite Places',
+    favoritemap: 'Favorite Map',
+    UserDetails: 'User Details',
+    goback: 'Go Back',
   },
   fr: {
     hello: 'Bonjour',
@@ -42,6 +47,11 @@ const i18n = new I18n({
     additem: 'Ajouter un élément',
     pleaseselectalocation: 'Veuillez sélectionner un emplacement',
     Placeaddedsuccessfully: 'Lieu ajouté avec succès',
+    userView: 'Vue utilisateur',
+    FavoritePlaces: 'Lieux favoris',
+    favoritemap: 'Carte favorite',
+    UserDetails: "Détails de l'utilisateur",
+    goback: 'Retourner',
   },
 });
 

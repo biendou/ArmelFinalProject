@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {signup as signupapi} from '../../api';
 import {Localization} from '../../helpers';
+import Video from '../video';
 
 function generateRandomCredentials() {
   const randomIndex = Math.floor(Math.random() * 1000000000); // Generate a random number between 0 and 999999
@@ -17,7 +18,7 @@ function generateRandomCredentials() {
   return {email, password};
 }
 
-const signup = ({navigation}) => {
+const Signup = ({navigation}) => {
   let dummyCredentials = generateRandomCredentials();
 
   const [email, setEmail] = useState(dummyCredentials.email);
@@ -25,6 +26,8 @@ const signup = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* <Video /> */}
+
       <Text style={styles.text}>{Localization.t('thisistheSignuppage')}</Text>
       <TextInput
         value={email}
@@ -92,4 +95,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-export default signup;
+export default Signup;
