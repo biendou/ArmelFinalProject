@@ -8,6 +8,7 @@ import Favoritemap from './favoritemap';
 import Loader from './loader';
 import Usermyplace from './usermyplace';
 import Video from './video';
+import Userprofile from './userprofile';
 export {
   Login,
   Signup,
@@ -19,4 +20,5 @@ export {
   Loader,
   Usermyplace,
   Video,
+  Userprofile,
 };

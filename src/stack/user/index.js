@@ -7,7 +7,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import {Myplace, Home} from '../../component';
+import {Myplace, Home, Userprofile} from '../../component';
 import {logout} from '../../api';
 import {Localization} from '../../helpers';
 
@@ -83,6 +83,11 @@ const App = () => {
         component={UserDetails}
         options={{headerShown: false, unmountOnBlur: true}}
       />
+      {/* <Drawer.Screen
+        name={Localization.t('userprofile')}
+        component={Userprofile}
+        options={{headerShown: false, unmountOnBlur: true}}
+      /> */}
     </Drawer.Navigator>
   );
 };
