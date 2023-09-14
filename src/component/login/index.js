@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -9,8 +9,6 @@ import {
 } from 'react-native';
 import {login as loginapi} from '../../api';
 import {Localization} from '../../helpers';
-import {useSelector} from 'react-redux';
-import Video from '../video';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('biendou@example.com'); //
@@ -18,16 +16,13 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Video /> */}
-      <Text style={styles.text}>{Localization.t('thisistheloginpage')}</Text>
+      {/* <Text style={styles.text}>{Localization.t('thisistheloginpage')}</Text> */}
       <TextInput
         value={email}
         placeholderTextColor={'black'}
         placeholder={Localization.t('enteremail')}
         style={styles.textinput}
         onChange={setEmail}
-        // autoCapitalize="false"
-        // clearTextOnFocus="true"
       />
       <TextInput
         value={password}
@@ -35,23 +30,21 @@ const Login = ({navigation}) => {
         placeholder={Localization.t('enterpassword')}
         style={styles.textinput}
         onChange={setPassword}
-        // autoCapitalize="false"
         secureTextEntry={true}
-        // clearTextOnFocus="true"
       />
       <TouchableOpacity
-        style={[styles.button, {backgroundColor: 'yellow'}]}
+        style={[styles.button, {backgroundColor: 'mistyrose'}]}
         onPress={() => {
           if (!email || !password) {
             ToastAndroid.show(
-              'Email and  Password is required.',
+              Localization.t('EmailandPasswordarerequired'),
               ToastAndroid.SHORT,
             );
             // errors.email = 'Email is required.';
           } else if (!/\S+@\S+\.\S+/.test(email) || password.length < 6) {
             // errors.email = 'Email is invalid.';
             ToastAndroid.show(
-              'Email or password is invalid, Please check your entries.',
+              Localization.t('EmailorpasswordisinvalidPleasecheckyourentries'),
               ToastAndroid.SHORT,
             );
           } else {
@@ -66,7 +59,10 @@ const Login = ({navigation}) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate(Localization.t('signup'))}>
-        <Text style={[styles.text, {fontSize: 20}]}>
+        <Text
+          numberOfLines={1}
+          adjustsFontSizeToFit={true}
+          style={[styles.text, {fontSize: 20}]}>
           {Localization.t('gotosignup')}
         </Text>
       </TouchableOpacity>
@@ -80,23 +76,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
+    backgroundColor: 'blanchedalmond',
   },
   textinput: {
+    /// General shape informations
     width: 200,
     height: 50,
-    backgroundColor: 'green',
+    backgroundColor: 'antiquewhite',
     marginBottom: 10,
-    color: 'black',
+    color: 'lightslategrey',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: 'bisque',
+    fontWeight: 'bold',
+    borderRadius: 10,
+    elevation: 5,
   },
   text: {
     color: 'black',
     fontSize: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
   button: {
-    width: 100,
+    width: 150,
     height: 50,
-    backgroundColor: 'red',
+    backgroundColor: 'olive',
     marginBottom: 10,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    fontWeight: 'bold',
+    elevation: 5,
   },
 });
 

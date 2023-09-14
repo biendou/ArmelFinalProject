@@ -15,7 +15,7 @@ import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {getCurrentPosition} from '../../helpers/geolocation';
 import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-
+import {Icon} from 'react-native-elements';
 import mapMarkers from './markers';
 import {Marker} from 'react-native-maps';
 
@@ -88,6 +88,7 @@ function HomeScreen({navigation}) {
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
   // console.log('#################################', user.uid ? user.uid : user);
   // variable declaration
+  const [refresh, setRefresh] = useState(false);
   const [position, setPosition] = useState(null);
   const [location, setLocation] = useState({
     latitude: 37.78825,
@@ -134,6 +135,8 @@ function HomeScreen({navigation}) {
     // ref.current.setAddressText('');
     const echo = setInterval(() => {
       // console.log('#################################', user.uid);
+      // const JSON.parse(useSelector(state => state?.userR?.userID))
+      setRefresh(!refresh);
       getCurrentPosition(user?.uid);
     }, 1000);
     return () => {
@@ -150,7 +153,7 @@ function HomeScreen({navigation}) {
         <View style={{flexDirection: 'row', backgroundColor: 'black'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: 'red',
+              backgroundColor: 'black',
               height: 44,
               borderRadius: 5,
               paddingVertical: 5,
@@ -160,7 +163,7 @@ function HomeScreen({navigation}) {
               alignItems: 'center',
             }}
             onPress={() => navigation.openDrawer()}>
-            <Text style={{color: 'white'}}>!</Text>
+            <Icon name="menu" type="material" color="white" />
           </TouchableOpacity>
           <GooglePlacesAutocomplete
             textInputProps={{
@@ -262,7 +265,7 @@ function HomeScreen({navigation}) {
 }
 const styles = StyleSheet.create({
   add: {
-    backgroundColor: 'green',
+    backgroundColor: 'mediumaquamarine',
     height: 50,
     width: 200,
     alignSelf: 'center',

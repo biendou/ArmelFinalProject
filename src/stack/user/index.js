@@ -39,7 +39,6 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <View
         style={{
-          backgroundColor: 'red',
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'center',
@@ -54,7 +53,11 @@ function CustomDrawerContent(props) {
           }}
         />
         <DrawerItem
-          style={{backgroundColor: 'green', alignSelf: 'bottom'}}
+          style={{
+            backgroundColor:
+              Localization.locale == 'en' ? 'skyblue' : 'palegreen',
+            alignSelf: 'bottom',
+          }}
           label={Localization.t('language')}
           onPress={LocalizationUpdate}
         />

@@ -26,6 +26,9 @@ const i18n = new I18n({
     favoritemap: 'Favorite Map',
     UserDetails: 'User Details',
     goback: 'Go Back',
+    EmailandPasswordarerequired: 'Email and Password are required.',
+    EmailorpasswordisinvalidPleasecheckyourentries:
+      'Email or password is invalid, Please check your entries.',
   },
   fr: {
     hello: 'Bonjour',
@@ -52,6 +55,9 @@ const i18n = new I18n({
     favoritemap: 'Carte favorite',
     UserDetails: "Détails de l'utilisateur",
     goback: 'Retourner',
+    EmailandPasswordarerequired: 'Email et mot de passe sont requis.',
+    EmailorpasswordisinvalidPleasecheckyourentries:
+      'Email ou mot de passe est invalide, Veuillez vérifier vos entrées.',
   },
 });
 

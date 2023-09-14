@@ -18,6 +18,8 @@ const checkPermission = permission => {
           console.log(
             'The permission has not been requested / is denied but requestable',
           );
+
+          console.log('ping');
           ToastAndroid.show(
             'The permission has not been requested / is denied but requestable',
             ToastAndroid.SHORT,
@@ -29,10 +31,12 @@ const checkPermission = permission => {
             'The permission is limited: some actions are possible',
             ToastAndroid.SHORT,
           );
+
           break;
         case RESULTS.GRANTED:
           console.log('The permission is granted');
           ToastAndroid.show('The permission is granted', ToastAndroid.SHORT);
+
           break;
         case RESULTS.BLOCKED:
           console.log('The permission is denied and not requestable anymore');

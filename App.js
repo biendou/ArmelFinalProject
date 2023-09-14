@@ -4,6 +4,8 @@ import {Text} from 'react-native';
 import {Home, User} from './src/stack';
 import auth from '@react-native-firebase/auth';
 
+import {Loader} from './src/component';
+
 import {Localization} from './src/helpers';
 
 // configuration of redux
@@ -20,13 +22,27 @@ import {setUserID} from './src/redux/slices/userslice';
 import {setLangToogler} from './src/redux/slices/langslice';
 import {checkPermission, requestPermission} from './src/helpers/permissions';
 import Video from './src/component/video';
+
+import {permission} from './src/helpers/permissions';
+
 const App = () => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     checkPermission('android.permission.ACCESS_FINE_LOCATION');
     checkPermission('android.permission.ACCESS_COARSE_LOCATION');
     requestPermission('android.permission.ACCESS_FINE_LOCATION');
     requestPermission('android.permission.ACCESS_COARSE_LOCATION');
+
+    // Loader timer
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <Provider store={store}>
       <Main />

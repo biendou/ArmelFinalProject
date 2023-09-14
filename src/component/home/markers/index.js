@@ -1,4 +1,5 @@
 import {Marker} from 'react-native-maps';
+import {Icon} from 'react-native-elements';
 import {View, Text} from 'react-native';
 
 const mapMarkers = (
@@ -35,15 +36,21 @@ const mapMarkers = (
       }}
       title={marker.author}
       description={marker.userName}>
-      {/* <View
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: 40,
-          backgroundColor: 'red',
-        }}>
-        <Text>a</Text>
-      </View> */}
+      <View>
+        <Icon name="thunderstorm" type="material" color="red" />
+        <Text
+          style={{
+            color: 'black',
+            fontSize: 10,
+            textShadowColor: 'white',
+            textShadowRadius: 20,
+            textShadowOffset: {width: -1, height: 1},
+            shadowOpacity: 1,
+            elevation: 1,
+          }}>
+          {marker.userName}
+        </Text>
+      </View>
     </Marker>
   ));
 };

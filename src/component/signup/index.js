@@ -27,8 +27,8 @@ const Signup = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <Video /> */}
-
-      <Text style={styles.text}>{Localization.t('thisistheSignuppage')}</Text>
+      {/* 
+      <Text style={styles.text}>{Localization.t('thisistheSignuppage')}</Text> */}
       <TextInput
         value={email}
         placeholderTextColor={'black'}
@@ -44,18 +44,18 @@ const Signup = ({navigation}) => {
         onChange={setPassword}
       />
       <TouchableOpacity
-        style={[styles.button, {backgroundColor: 'yellow'}]}
+        style={styles.button}
         onPress={() => {
           if (!email || !password) {
             ToastAndroid.show(
-              'Email and  Password is required.',
+              Localization.t('EmailandPasswordarerequired'),
               ToastAndroid.SHORT,
             );
             // errors.email = 'Email is required.';
           } else if (!/\S+@\S+\.\S+/.test(email) || password.length < 6) {
             // errors.email = 'Email is invalid.';
             ToastAndroid.show(
-              'Email or password is invalid, Please check your entries.',
+              Localization.t('EmailorpasswordisinvalidPleasecheckyourentries'),
               ToastAndroid.SHORT,
             );
           } else {
@@ -76,23 +76,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
+    backgroundColor: 'blanchedalmond',
   },
   textinput: {
     width: 200,
     height: 50,
-    backgroundColor: 'green',
+    backgroundColor: 'antiquewhite',
     marginBottom: 10,
-    color: 'black',
+    color: 'lightslategrey',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: 'bisque',
+    fontWeight: 'bold',
+    borderRadius: 10,
+    elevation: 5,
   },
   text: {
     color: 'black',
     fontSize: 50,
   },
   button: {
-    width: 100,
+    width: 150,
     height: 50,
-    backgroundColor: 'red',
+    backgroundColor: 'olive',
     marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    fontWeight: 'bold',
+    elevation: 5,
   },
 });
 export default Signup;

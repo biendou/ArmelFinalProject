@@ -87,11 +87,6 @@ function UserView({navigation}) {
             </View>
           )}
         />
-        <TouchableOpacity
-          style={styles.add}
-          onPress={() => navigation.toggleDrawer()}>
-          <Text style={styles.text}>{Localization.t('goback')}</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

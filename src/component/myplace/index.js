@@ -82,7 +82,7 @@ function NotificationsScreen({navigation}) {
 
 styles = StyleSheet.create({
   add: {
-    backgroundColor: 'green',
+    backgroundColor: 'mediumaquamarine',
     height: 50,
     width: 200,
     alignSelf: 'center',
