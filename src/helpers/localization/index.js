@@ -29,6 +29,8 @@ const i18n = new I18n({
     EmailandPasswordarerequired: 'Email and Password are required.',
     EmailorpasswordisinvalidPleasecheckyourentries:
       'Email or password is invalid, Please check your entries.',
+    userprofile: 'User Profile',
+    userupdated: 'User updated!',
   },
   fr: {
     hello: 'Bonjour',
@@ -58,6 +60,8 @@ const i18n = new I18n({
     EmailandPasswordarerequired: 'Email et mot de passe sont requis.',
     EmailorpasswordisinvalidPleasecheckyourentries:
       'Email ou mot de passe est invalide, Veuillez vérifier vos entrées.',
+    userprofile: "Profil de l'utilisateur",
+    userupdated: 'Utilisateur mis à jour!',
   },
 });
 

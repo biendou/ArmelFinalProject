@@ -9,7 +9,7 @@ const getCurrentPosition = userID => {
       firestore()
         .collection('UsersPosition')
         .doc('userIdBiendouYepdieu')
-        .set({
+        .update({
           currentLatitude: position.coords.latitude,
           currentLongitude: position.coords.longitude,
           locationTime: position.timestamp,

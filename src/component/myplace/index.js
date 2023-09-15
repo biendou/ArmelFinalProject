@@ -13,7 +13,7 @@ import firestore from '@react-native-firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 
-function NotificationsScreen({navigation}) {
+function Myplace({navigation}) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [users, setUsers] = useState([]); // Initial empty array of users
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
@@ -127,4 +127,4 @@ styles = StyleSheet.create({
     color: '#777',
   },
 });
-export default NotificationsScreen;
+export default Myplace;
