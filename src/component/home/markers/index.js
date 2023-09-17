@@ -1,8 +1,9 @@
-import {Marker} from 'react-native-maps';
+import {Marker, Callout} from 'react-native-maps';
 import {Icon} from 'react-native-elements';
-import {View, Text} from 'react-native';
+import {View, Text, Button, Touchable} from 'react-native';
 
 const mapMarkers = (
+  chatRef,
   markers = [
     {
       currentLatitude: 48.858844,
@@ -34,23 +35,38 @@ const mapMarkers = (
           ? marker.currentLongitude
           : index * 10,
       }}
-      title={marker.author}
-      description={marker.userName}>
-      <View>
-        <Icon name="thunderstorm" type="material" color="red" />
-        <Text
-          style={{
-            color: 'black',
-            fontSize: 10,
-            textShadowColor: 'white',
-            textShadowRadius: 20,
-            textShadowOffset: {width: -1, height: 1},
-            shadowOpacity: 1,
-            elevation: 1,
-          }}>
-          {marker.userName}
-        </Text>
+      title={marker.userName}
+      description={JSON.stringify(marker.speed)}>
+      <View style={{flexDirection: 'row'}}>
+        <Icon name="thunderstorm" type="material" color={marker.userColor} />
+        <Icon
+          style={{positionTop: -30}}
+          name="sms"
+          type="material"
+          color={'red'}
+        />
       </View>
+      <Text
+        style={{
+          color: 'black',
+          fontSize: 10,
+          textShadowColor: 'white',
+          textShadowRadius: 20,
+          textShadowOffset: {width: -1, height: 1},
+          shadowOpacity: 1,
+          elevation: 1,
+        }}>
+        {marker.userName}
+      </Text>
+      <Callout
+        tooltip={true}
+        onPress={() => {
+          chatRef.current.setModalVisible();
+        }}>
+        <View style={{width: 110}}>
+          <Button color={marker.userColor} title={'Message me'}></Button>
+        </View>
+      </Callout>
     </Marker>
   ));
 };

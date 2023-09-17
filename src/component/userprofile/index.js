@@ -65,7 +65,7 @@ const UserProfile = () => {
       .then(userDocument => {
         setInput1(userDocument._data.firstName);
         setInput2(userDocument._data.lastName);
-        setColorinit(userDocument._data.color);
+        setColorinit(userDocument._data.userColor);
         console.log(userDocument._data, '============>', colorinit);
         setReady1(true);
       })
@@ -81,7 +81,15 @@ const UserProfile = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.area1}></View>
+      <View style={styles.area1}>
+        <Icon
+          style={styles.headIcon}
+          size={200}
+          name="face"
+          type="material"
+          color={colorinit}
+        />
+      </View>
       <View style={styles.area2}>
         <View style={styles.area21}>
           <View style={styles.area211}>
@@ -99,9 +107,9 @@ const UserProfile = () => {
                 changeinput1(setEdit1, edit1, input1);
               }}>
               {!edit1 ? (
-                <Icon name="edit" type="material" color="#517fa4" />
+                <Icon name="edit" type="material" color="red" size={20} />
               ) : (
-                <Icon name="done" type="material" color="#517fa4" />
+                <Icon name="done" type="material" color="black" size={20} />
               )}
             </TouchableOpacity>
           </View>
@@ -120,9 +128,9 @@ const UserProfile = () => {
                 changeinput2(setEdit2, edit2, input2);
               }}>
               {!edit2 ? (
-                <Icon name="edit" type="material" color="#517fa4" />
+                <Icon name="edit" type="material" color="red" size={20} />
               ) : (
-                <Icon name="done" type="material" color="#517fa4" />
+                <Icon name="done" type="material" color="green" size={20} />
               )}
             </TouchableOpacity>
           </View>
@@ -145,64 +153,79 @@ styles = {
   },
   area1: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 50,
   },
   area2: {
     flex: 2,
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
   },
   area21: {
     flex: 1,
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
   area211: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'yellow',
-    marginBottom: 20,
-    marginTop: 20,
+    backgroundColor: 'white',
+    // marginBottom: 20,
+    // marginTop: 10,
+    // borderRadius: 10,
+    alignItems: 'flex-end',
+    marginBottom: 5,
   },
   area212: {
     flex: 1,
+    alignItems: 'flex-start',
     flexDirection: 'row',
-    backgroundColor: 'red',
-    marginBottom: 20,
-    marginTop: 20,
+    backgroundColor: 'white',
+
+    // marginBottom: 20,
+    // marginTop: 20,
   },
   area22: {
     flex: 1,
+
     flexDirection: 'Column',
-    backgroundColor: 'purple',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'white',
   },
   area221: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
   },
   area222: {
     flex: 1,
-    backgroundColor: 'orange',
+    backgroundColor: 'white',
+    paddingTop: 5,
   },
   input: {
     width: 200,
     height: 50,
-    backgroundColor: 'white',
+    backgroundColor: 'antiquewhite',
     alignContent: 'center',
+    borderRadius: 10,
   },
   button1: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     height: 50,
   },
   button2: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: 'white',
     height: 50,
+  },
+  headIcon: {
+    color: 'white',
+    width: 200,
+    height: 200,
+    fontSize: 500,
   },
 };
 

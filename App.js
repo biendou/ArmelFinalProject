@@ -26,7 +26,10 @@ import Video from './src/component/video';
 import {permission} from './src/helpers/permissions';
 
 const App = () => {
+  ////Spalsh screen
   const [loading, setLoading] = useState(true);
+
+  // permission
   useEffect(() => {
     checkPermission('android.permission.ACCESS_FINE_LOCATION');
     checkPermission('android.permission.ACCESS_COARSE_LOCATION');
@@ -36,7 +39,7 @@ const App = () => {
     // Loader timer
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -46,7 +49,6 @@ const App = () => {
   return (
     <Provider store={store}>
       <Main />
-      {/* <Video /> */}
     </Provider>
   );
 };

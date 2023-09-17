@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {Button, Modal, StyleSheet, View, ToastAndroid} from 'react-native';
+import {
+  Button,
+  Modal,
+  StyleSheet,
+  View,
+  ToastAndroid,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import Localisation from '../../helpers/localization';
 import firestore from '@react-native-firebase/firestore';
 import ColorPicker, {
@@ -23,7 +31,7 @@ export default function App({init, set}) {
       .collection('UsersPosition')
       .doc('userIdBiendouYepdieu')
       .update({
-        color: color,
+        userColor: color,
       })
       .then(() => {
         set(color);
@@ -34,9 +42,19 @@ export default function App({init, set}) {
         console.log(error);
       });
   };
+
+  onCancel = () => {
+    setShowModal(false);
+  };
+
   return (
     <View style={styles.container}>
-      <Button title="Color Picker" onPress={() => setShowModal(true)} />
+      <TouchableOpacity
+        title="Color Picker"
+        onPress={() => setShowModal(true)}
+        style={styles.button}>
+        <Text style={styles.text}>Color Picker</Text>
+      </TouchableOpacity>
 
       <Modal visible={showModal} animationType="slide">
         <ColorPicker
@@ -50,7 +68,14 @@ export default function App({init, set}) {
           <Swatches />
         </ColorPicker>
 
-        <Button title="Ok" onPress={onOk} />
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.button1} onPress={onOk}>
+            <Text style={styles.text}>OK</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button2} onPress={onCancel}>
+            <Text style={styles.text}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
       </Modal>
     </View>
   );
@@ -60,5 +85,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'mediumaquamarine',
+    borderRadius: 10,
+    height: 50,
+    width: 200,
+  },
+  button1: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'green',
+    borderRadius: 10,
+    height: 50,
+    width: 200,
+    margin: 5,
+  },
+  button2: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    borderRadius: 10,
+    height: 50,
+    width: 200,
+    margin: 5,
+  },
+
+  text: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
 });

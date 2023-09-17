@@ -86,7 +86,7 @@ const App = () => {
       <Drawer.Screen
         name={Localization.t('userprofile')}
         component={UserProfile}
-        options={{headerShown: false, unmountOnBlur: true}}
+        options={{unmountOnBlur: true}}
       />
     </Drawer.Navigator>
   );

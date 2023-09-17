@@ -18,6 +18,8 @@
     "@react-navigation/native-stack": "^6.9.13",
     "@reduxjs/toolkit": "^1.9.5",
     "i18n-js": "^4.3.0",
+    "pubnub": "^7.3.3",
+    "pubnub-react": "^3.0.2",
     "react": "18.2.0",
     "react-native": "0.72.4",
     "react-native-elements": "^3.4.3",

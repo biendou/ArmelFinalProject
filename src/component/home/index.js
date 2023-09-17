@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Text,
   ToastAndroid,
+  Modal,
+  Alert,
 } from 'react-native';
 import {Localization} from '../../helpers';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
@@ -18,6 +20,7 @@ import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import {Icon} from 'react-native-elements';
 import mapMarkers from './markers';
 import {Marker} from 'react-native-maps';
+import Chat from './chat';
 
 // const createDummyData = id => {
 //   // Generate a random user ID.
@@ -88,6 +91,7 @@ function HomeScreen({navigation}) {
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
   // console.log('#################################', user.uid ? user.uid : user);
   // variable declaration
+  const chat = useRef(null);
   const [refresh, setRefresh] = useState(false);
   const [position, setPosition] = useState(null);
   const [location, setLocation] = useState({
@@ -147,7 +151,7 @@ function HomeScreen({navigation}) {
   return (
     <View style={{flex: 1}}>
       <MapView provider={PROVIDER_GOOGLE} style={styles.map} region={location}>
-        {position ? mapMarkers(position) : mapMarkers()}
+        {position ? mapMarkers(chat, position) : mapMarkers()}
       </MapView>
       <View style={styles.organizer}>
         <View style={{flexDirection: 'row', backgroundColor: 'black'}}>
@@ -242,20 +246,23 @@ function HomeScreen({navigation}) {
             }}
           />
         </View>
+        <Chat ref={chat} />
         <TouchableOpacity
           style={styles.add}
           onPress={() => {
-            if (load.current === null) {
-              ToastAndroid.show(
-                Localization.t('pleaseselectalocation'),
-                ToastAndroid.SHORT,
-              );
-              // alert('please enter a location');
-            } else {
-              postdata(load.current, user);
-              navigation.navigate(Localization.t('myplace'));
-            }
+            // if (load.current === null) {
+            //   ToastAndroid.show(
+            //     Localization.t('pleaseselectalocation'),
+            //     ToastAndroid.SHORT,
+            //   );
+            //   // alert('please enter a location');
+            // } else {
+            //   postdata(load.current, user);
+            //   navigation.navigate(Localization.t('myplace'));
+            // }
             // postdata(load);
+
+            chat.current.setModalVisible();
           }}>
           <Text style={styles.text}>{Localization.t('additem')}</Text>
         </TouchableOpacity>
