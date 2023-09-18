@@ -82,7 +82,7 @@ const postdata = (data, user) => {
         Localization.t('Placeaddedsuccessfully'),
         ToastAndroid.LONG,
       );
-      console.log('User added!');
+      // console.log('User added!');
     });
 };
 
@@ -128,7 +128,7 @@ function HomeScreen({navigation}) {
         });
 
         setPosition(positions);
-        console.log('=======>', positions);
+        // console.log('=======>', positions);
       });
 
     // Unsubscribe from events when no longer in use
@@ -142,7 +142,7 @@ function HomeScreen({navigation}) {
       // const JSON.parse(useSelector(state => state?.userR?.userID))
       setRefresh(!refresh);
       getCurrentPosition(user?.uid);
-    }, 1000);
+    }, 1000000000000000000000000000); ///////// <----------------- change this to change the refresh rate
     return () => {
       clearInterval(echo);
     };
@@ -250,19 +250,19 @@ function HomeScreen({navigation}) {
         <TouchableOpacity
           style={styles.add}
           onPress={() => {
-            // if (load.current === null) {
-            //   ToastAndroid.show(
-            //     Localization.t('pleaseselectalocation'),
-            //     ToastAndroid.SHORT,
-            //   );
-            //   // alert('please enter a location');
-            // } else {
-            //   postdata(load.current, user);
-            //   navigation.navigate(Localization.t('myplace'));
-            // }
-            // postdata(load);
+            if (load.current === null) {
+              ToastAndroid.show(
+                Localization.t('pleaseselectalocation'),
+                ToastAndroid.SHORT,
+              );
+              // alert('please enter a location');
+            } else {
+              postdata(load.current, user);
+              navigation.navigate(Localization.t('myplace'));
+            }
+            postdata(load);
 
-            chat.current.setModalVisible();
+            // chat.current.setModalVisible();
           }}>
           <Text style={styles.text}>{Localization.t('additem')}</Text>
         </TouchableOpacity>

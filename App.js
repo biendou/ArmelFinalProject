@@ -25,6 +25,17 @@ import Video from './src/component/video';
 
 import {permission} from './src/helpers/permissions';
 
+////
+
+import PubNub from 'pubnub';
+import {PubNubProvider} from 'pubnub-react';
+
+const pubnub = new PubNub({
+  publishKey: 'pub-c-f2919219-ac20-4403-b537-a678b79b4381',
+  subscribeKey: 'sub-c-c5ddc634-c6fc-11e7-afd4-56ea5891403c',
+  uuid: '10k9jl8tJfctGzd7IjrNcSCvRAJ2',
+});
+
 const App = () => {
   ////Spalsh screen
   const [loading, setLoading] = useState(true);
@@ -48,7 +59,9 @@ const App = () => {
   }
   return (
     <Provider store={store}>
-      <Main />
+      <PubNubProvider client={pubnub}>
+        <Main />
+      </PubNubProvider>
     </Provider>
   );
 };

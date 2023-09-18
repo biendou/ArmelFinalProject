@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState, useEffect} from 'react';
 import {Button, View, Linking} from 'react-native';
 import {
   createDrawerNavigator,
@@ -16,6 +17,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setLang} from '../../redux/slices/langslice';
 
 import {UserDetails} from '../';
+
+import {usePubNub} from 'pubnub-react';
+
+import {update} from '../../redux/slices/message';
+
+import firestore from '@react-native-firebase/firestore';
 
 const Logout = ({navigation}) => {
   navigation.goBack();
@@ -69,6 +76,57 @@ function CustomDrawerContent(props) {
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+  const pubnub = usePubNub();
+  const dispatch = useDispatch();
+  const [channels, setChannels] = useState([]);
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('UsersPosition')
+      .onSnapshot(querySnapshot => {
+        const data = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          data.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+        const userID = [];
+        data.forEach(item => {
+          if (!userID.includes(item.userId)) {
+            userID.push(item.userId);
+          }
+        });
+        console.log('userID', userID);
+        setChannels(userID);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
+
+  const handleMessage = event => {
+    const message = event.message;
+    if (typeof message === 'string' || message.hasOwnProperty('text')) {
+      dispatch(update(event));
+    }
+  };
+
+  useEffect(() => {
+    pubnub.addListener({message: handleMessage});
+    return () => {
+      pubnub.removeListener({message: handleMessage});
+    };
+  }, []);
+
+  useEffect(() => {
+    pubnub.subscribe({channels});
+    return () => {
+      pubnub.unsubscribeAll();
+    };
+  }, [pubnub, channels]);
+
   return (
     <Drawer.Navigator
       drawerContent={props => <CustomDrawerContent {...props} />}>

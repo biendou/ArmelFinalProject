@@ -1,7 +1,8 @@
 import {Marker, Callout} from 'react-native-maps';
 import {Icon} from 'react-native-elements';
 import {View, Text, Button, Touchable} from 'react-native';
-
+import {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 const mapMarkers = (
   chatRef,
   markers = [
@@ -25,7 +26,26 @@ const mapMarkers = (
     },
   ],
 ) => {
-  return markers.map((marker, index) => (
+  const messages = useSelector(state => state.messR.message);
+  const userIdRedux = JSON.parse(
+    useSelector(state => state?.userR?.userID),
+  ).uid;
+  // console.log('userId', user);
+
+  const [channellist, setChannels] = useState([]);
+  const [fMarkers, setFMarkers] = useState([]);
+  useEffect(() => {
+    const channels = [];
+    messages.forEach(item => {
+      if (!channels.includes(item.publisher) && item.channel === userIdRedux) {
+        channels.push(item.publisher);
+      }
+    });
+    setChannels(channels);
+    // console.log('channels=======================================>', channels);
+  }, [messages]);
+
+  return markers.map((marker, index, channels) => (
     <Marker
       // style={{width: 100, height: 100, backgroundColor: 'red'}}
       key={index}
@@ -39,12 +59,14 @@ const mapMarkers = (
       description={JSON.stringify(marker.speed)}>
       <View style={{flexDirection: 'row'}}>
         <Icon name="thunderstorm" type="material" color={marker.userColor} />
-        <Icon
-          style={{positionTop: -30}}
-          name="sms"
-          type="material"
-          color={'red'}
-        />
+        {channellist.includes(marker.userId) && (
+          <Icon
+            style={{positionTop: -30}}
+            name="sms"
+            type="material"
+            color={'red'}
+          />
+        )}
       </View>
       <Text
         style={{
@@ -61,7 +83,7 @@ const mapMarkers = (
       <Callout
         tooltip={true}
         onPress={() => {
-          chatRef.current.setModalVisible();
+          chatRef.current.setModalVisible(marker.userId);
         }}>
         <View style={{width: 110}}>
           <Button color={marker.userColor} title={'Message me'}></Button>
