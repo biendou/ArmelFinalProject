@@ -16,20 +16,37 @@ import {
   FlatList,
 } from 'react-native';
 import {usePubNub} from 'pubnub-react';
+import {Button} from 'react-native-elements/dist/buttons/Button';
 
 const Item = ({title, position}) => {
   if (position) {
     return (
-      <View style={{backgroundColor: '#ffebcd', borderRadius: 20}}>
-        <Text style={{color: 'black', alignSelf: 'flex-end'}}>
+      <View style={{backgroundColor: 'white', borderRadius: 20}}>
+        <Text
+          style={{
+            color: 'black',
+            alignSelf: 'flex-end',
+            backgroundColor: '#fafad2',
+            padding: 5,
+            margin: 2,
+            borderRadius: 20,
+          }}>
           {JSON.stringify(title)}
         </Text>
       </View>
     );
   } else {
     return (
-      <View style={{backgroundColor: '#ffebcd', borderRadius: 20}}>
-        <Text style={{color: 'black', alignSelf: 'flex-start'}}>
+      <View style={{backgroundColor: 'white', borderRadius: 20}}>
+        <Text
+          style={{
+            color: 'black',
+            alignSelf: 'flex-start',
+            backgroundColor: '#66cdaa',
+            padding: 5,
+            margin: 2,
+            borderRadius: 20,
+          }}>
           {JSON.stringify(title)}
         </Text>
       </View>
@@ -82,7 +99,6 @@ const Chat = (props, ref) => {
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() => {
-            Alert.alert('Modal has been closed.');
             setModalVisible(false);
           }}></TouchableOpacity>
       </View>
@@ -93,15 +109,17 @@ const Chat = (props, ref) => {
           borderTopLeftRadius: 50,
           borderTopRightRadius: 50,
           flexDirection: 'column',
+          // opacity: 0,
         }}>
         <View
           style={{
             flex: 1,
-            backgroundColor: '#faebd7',
+            backgroundColor: 'white',
             borderTopLeftRadius: 50,
             borderTopRightRadius: 50,
             justifyContent: 'center',
             alignItems: 'center',
+            // opacity: 0,
           }}>
           <FlatList
             style={{width: '80%', marginTop: 4}}
@@ -116,10 +134,17 @@ const Chat = (props, ref) => {
           />
         </View>
         <View
-          style={{backgroundColor: 'black', height: 50, flexDirection: 'row'}}>
+          style={{
+            backgroundColor: 'black',
+            height: 50,
+            flexDirection: 'row',
+
+            alignItems: 'center',
+          }}>
           <TextInput
             style={{
-              width: '80%',
+              height: '90%',
+              width: '87%',
               backgroundColor: 'white',
               borderRadius: 20,
             }}
@@ -127,15 +152,19 @@ const Chat = (props, ref) => {
             onChangeText={text => {
               setMessage(text);
             }}
+            onSubmitEditing={() => {
+              sendMessage(message);
+            }}
           />
-          <View
-            Style={{
-              backgroundColor: 'gold',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flex: 1,
-            }}>
-            <TouchableOpacity
+          <View>
+            <Button
+              title="Send"
+              color="#841584"
+              onPress={() => {
+                sendMessage(message);
+              }}
+            />
+            {/* <TouchableOpacity
               Style={{
                 backgroundColor: 'gold',
                 height: 20,
@@ -147,7 +176,7 @@ const Chat = (props, ref) => {
                 sendMessage(message);
               }}>
               <Text style={{color: 'white', fontSize: 30}}>Send</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>

@@ -9,6 +9,7 @@ import Loader from './loader';
 import Usermyplace from './usermyplace';
 import Video from './video';
 import UserProfile from './userprofile';
+import Itccommunication from './itccommunication';
 export {
   Login,
   Signup,
@@ -21,4 +22,5 @@ export {
   Usermyplace,
   Video,
   UserProfile,
+  Itccommunication,
 };

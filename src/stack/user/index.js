@@ -8,7 +8,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import {Myplace, Home, UserProfile} from '../../component';
+import {Myplace, Home, UserProfile, Itccommunication} from '../../component';
 import {logout} from '../../api';
 import {Localization} from '../../helpers';
 
@@ -78,7 +78,7 @@ const Drawer = createDrawerNavigator();
 const App = () => {
   const pubnub = usePubNub();
   const dispatch = useDispatch();
-  const [channels, setChannels] = useState([]);
+  const [channels, setChannels] = useState(['ITC']);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -92,7 +92,7 @@ const App = () => {
             key: documentSnapshot.id,
           });
         });
-        const userID = [];
+        const userID = ['ITC'];
         data.forEach(item => {
           if (!userID.includes(item.userId)) {
             userID.push(item.userId);
@@ -144,6 +144,11 @@ const App = () => {
       <Drawer.Screen
         name={Localization.t('userprofile')}
         component={UserProfile}
+        options={{unmountOnBlur: true}}
+      />
+      <Drawer.Screen
+        name={Localization.t('Itccommunication')}
+        component={Itccommunication}
         options={{unmountOnBlur: true}}
       />
     </Drawer.Navigator>
