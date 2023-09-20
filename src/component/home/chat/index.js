@@ -14,9 +14,11 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  Button,
 } from 'react-native';
 import {usePubNub} from 'pubnub-react';
-import {Button} from 'react-native-elements/dist/buttons/Button';
+import {useDispatch} from 'react-redux';
+import {freeall} from '../../../redux/slices/message';
 
 const Item = ({title, position}) => {
   if (position) {
@@ -55,6 +57,7 @@ const Item = ({title, position}) => {
 };
 
 const Chat = (props, ref) => {
+  const dispatch = useDispatch();
   const userIdRedux = JSON.parse(
     useSelector(state => state?.userR?.userID),
   ).uid;
@@ -100,6 +103,7 @@ const Chat = (props, ref) => {
           style={{flex: 1}}
           onPress={() => {
             setModalVisible(false);
+            dispatch(freeall());
           }}></TouchableOpacity>
       </View>
       <View
@@ -164,19 +168,6 @@ const Chat = (props, ref) => {
                 sendMessage(message);
               }}
             />
-            {/* <TouchableOpacity
-              Style={{
-                backgroundColor: 'gold',
-                height: 20,
-                width: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => {
-                sendMessage(message);
-              }}>
-              <Text style={{color: 'white', fontSize: 30}}>Send</Text>
-            </TouchableOpacity> */}
           </View>
         </View>
       </View>

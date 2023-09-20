@@ -17,6 +17,7 @@ import ColorPicker, {
   OpacitySlider,
   HueSlider,
 } from 'reanimated-color-picker';
+import {Localization} from '../../helpers';
 
 export default function App({init, set}) {
   const [showModal, setShowModal] = useState(false);
@@ -50,10 +51,10 @@ export default function App({init, set}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        title="Color Picker"
+        title={Localisation.t('colorpicker')}
         onPress={() => setShowModal(true)}
         style={styles.button}>
-        <Text style={styles.text}>Color Picker</Text>
+        <Text style={styles.text}>{Localisation.t('colorpicker')}</Text>
       </TouchableOpacity>
 
       <Modal visible={showModal} animationType="slide">
@@ -70,10 +71,10 @@ export default function App({init, set}) {
 
         <View style={styles.container}>
           <TouchableOpacity style={styles.button1} onPress={onOk}>
-            <Text style={styles.text}>OK</Text>
+            <Text style={styles.text}>{Localisation.t('ok')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button2} onPress={onCancel}>
-            <Text style={styles.text}>Cancel</Text>
+            <Text style={styles.text}>{Localisation.t('cancel')}</Text>
           </TouchableOpacity>
         </View>
       </Modal>

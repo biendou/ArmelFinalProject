@@ -2,7 +2,8 @@ import {Marker, Callout} from 'react-native-maps';
 import {Icon} from 'react-native-elements';
 import {View, Text, Button, Touchable} from 'react-native';
 import {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {reset} from '../../../redux/slices/message';
 const mapMarkers = (
   chatRef,
   markers = [
@@ -26,7 +27,27 @@ const mapMarkers = (
     },
   ],
 ) => {
+  const dispatch = useDispatch();
   const messages = useSelector(state => state.messR.message);
+  const counter = useSelector(state => state.messR.counter);
+  console.log('counter', counter);
+  // markers.forEach(item => {
+  //   console.log(
+  //     'item',
+  //     item.userId,
+  //     counter.some(item2 => {
+  //       console.log(
+  //         'item2',
+  //         item2.id,
+  //         'Item',
+  //         item.userId,
+  //         item2.id === item.userId,
+  //       );
+  //       return item2.id === item.userId;
+  //     }),
+  //   );
+  // });
+
   const userIdRedux = JSON.parse(
     useSelector(state => state?.userR?.userID),
   ).uid;
@@ -59,13 +80,31 @@ const mapMarkers = (
       description={JSON.stringify(marker.speed)}>
       <View style={{flexDirection: 'row'}}>
         <Icon name="thunderstorm" type="material" color={marker.userColor} />
-        {channellist.includes(marker.userId) && (
-          <Icon
-            style={{positionTop: -30}}
-            name="sms"
-            type="material"
-            color={'red'}
-          />
+        {counter.some(item => {
+          console.log(
+            'item',
+            item.id,
+            'Item',
+            marker.userId,
+            item.id === marker.userId,
+          );
+          return item.id === marker.userId && item.count > 0;
+        }) && (
+          <>
+            <Icon
+              style={{positionTop: -30}}
+              name="sms"
+              type="material"
+              color={'red'}
+            />
+            <Text style={{color: 'red', fontWeight: '900'}}>
+              {
+                counter.find(item => {
+                  return item.id === marker.userId;
+                }).count
+              }
+            </Text>
+          </>
         )}
       </View>
       <Text
@@ -84,6 +123,7 @@ const mapMarkers = (
         tooltip={true}
         onPress={() => {
           chatRef.current.setModalVisible(marker.userId);
+          dispatch(reset(marker.userId));
         }}>
         <View style={{width: 110}}>
           <Button color={marker.userColor} title={'Message me'}></Button>

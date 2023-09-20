@@ -1,6 +1,5 @@
-import * as React from 'react';
 import {useState, useEffect} from 'react';
-import {Button, View, Linking} from 'react-native';
+import {Button, View, Linking, Text} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -79,6 +78,10 @@ const App = () => {
   const pubnub = usePubNub();
   const dispatch = useDispatch();
   const [channels, setChannels] = useState(['ITC']);
+  const value = useSelector(state => state.messR.counter).find(
+    element => element.id === 'ITC',
+  )?.count;
+  console.log('#####################value', value);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -149,7 +152,30 @@ const App = () => {
       <Drawer.Screen
         name={Localization.t('Itccommunication')}
         component={Itccommunication}
-        options={{unmountOnBlur: true}}
+        options={{
+          unmountOnBlur: true,
+          drawerLabel: props => (
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{color: 'black'}}>
+                {Localization.t('Itccommunication')}
+              </Text>
+              {value > 0 && (
+                <Text
+                  style={{
+                    color: 'red',
+                    fontWeight: 900,
+                    marginLeft: 5,
+                    backgroundColor: 'gold',
+                    paddingLeft: 5,
+                    paddingRight: 5,
+                    borderRadius: 20,
+                  }}>
+                  {value}
+                </Text>
+              )}
+            </View>
+          ),
+        }}
       />
     </Drawer.Navigator>
   );

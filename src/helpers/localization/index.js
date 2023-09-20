@@ -32,6 +32,9 @@ const i18n = new I18n({
     userprofile: 'User Profile',
     userupdated: 'User updated!',
     Itccommunication: 'ITC Communication',
+    cancel: 'Cancel',
+    ok: 'Ok',
+    colorpicker: 'Color Picker',
   },
   fr: {
     hello: 'Bonjour',
@@ -64,6 +67,9 @@ const i18n = new I18n({
     userprofile: "Profil de l'utilisateur",
     userupdated: 'Utilisateur mis à jour!',
     Itccommunication: 'Communication ITC',
+    cancel: 'Annuler',
+    ok: 'Ok',
+    colorpicker: 'Sélecteur de couleur',
   },
 });
 

@@ -1,9 +1,11 @@
 import {useState, useEffect} from 'react';
 import {View, FlatList, TextInput, Button, Text} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {usePubNub} from 'pubnub-react';
+import {reset, freeall} from '../../redux/slices/message';
 
 const Itc = () => {
+  const dispatch = useDispatch();
   const userIdRedux = JSON.parse(
     useSelector(state => state?.userR?.userID),
   ).uid;
@@ -16,6 +18,14 @@ const Itc = () => {
   useEffect(() => {
     setData(messages.filter(item => item.channel === 'ITC'));
   }, [messages]);
+
+  useEffect(() => {
+    dispatch(reset('ITC'));
+
+    return () => {
+      dispatch(freeall());
+    };
+  }, []);
 
   const sendMessage = message => {
     if (message) {
