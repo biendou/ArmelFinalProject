@@ -3,8 +3,10 @@ import {View, FlatList, TextInput, Button, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {usePubNub} from 'pubnub-react';
 import {reset, freeall} from '../../redux/slices/message';
+// import {useDebounce} from '../../helpers/bouncer';
 
 const Itc = () => {
+  const {bouncer} = useDebounce();
   const dispatch = useDispatch();
   const userIdRedux = JSON.parse(
     useSelector(state => state?.userR?.userID),

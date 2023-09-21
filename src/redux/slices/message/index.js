@@ -66,16 +66,24 @@ export const messageSlice = createSlice({
       console.log('==========================> Counter', state.counter);
     },
     reset: (state, action) => {
-      state.counter = state.counter.map(item => {
-        if (item.id === action.payload) {
-          return {
-            ...item,
-            count: 0,
-            available: false,
-          };
-        }
-        return item;
-      });
+      if (state.counter.some(item => item.id === action.payload)) {
+        state.counter = state.counter.map(item => {
+          if (item.id === action.payload) {
+            return {
+              ...item,
+              count: 0,
+              available: false,
+            };
+          }
+          return item;
+        });
+      } else {
+        state.counter.push({
+          id: action.payload,
+          count: 0,
+          available: false,
+        });
+      }
     },
     freeall: state => {
       state.counter = state.counter.map(item => {
