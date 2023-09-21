@@ -6,7 +6,6 @@ import {reset, freeall} from '../../redux/slices/message';
 // import {useDebounce} from '../../helpers/bouncer';
 
 const Itc = () => {
-  const {bouncer} = useDebounce();
   const dispatch = useDispatch();
   const userIdRedux = JSON.parse(
     useSelector(state => state?.userR?.userID),
