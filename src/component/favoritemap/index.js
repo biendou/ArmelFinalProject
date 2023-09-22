@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 
 function Favoritemap({route, navigation}) {
   const {Item, otherParam} = route.params;
@@ -8,17 +8,15 @@ function Favoritemap({route, navigation}) {
     latitude: Item.latitude,
     longitude: Item.longitude,
     latitudeDelta: 0.015,
+
     longitudeDelta: 0.0121,
   });
-  console.log('item', Item);
-  console.log('otherParam', otherParam);
 
   return (
     <View style={{flex: 1}}>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        region={location}></MapView>
+      <MapView provider={PROVIDER_GOOGLE} style={styles.map} region={location}>
+        <Marker coordinate={location} title={Item.placeName} />
+      </MapView>
     </View>
   );
 }

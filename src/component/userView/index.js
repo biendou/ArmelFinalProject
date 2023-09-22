@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-
+import {Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
 import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
@@ -53,36 +53,30 @@ function UserView({navigation}) {
   }
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      {/* <Button onPress={() => navigation.goBack()} title="Go back home" /> */}
-      {/* <View style={styles.container}>
-        <Text style={styles.text}>placeName </Text>
-        <Text style={styles.text}>Latitude: </Text>
-        <Text style={styles.text}>Longitude: </Text>
-        <Text style={styles.text}>userId: </Text>
-      </View> */}
+    <View style={styles.container}>
       <View Style={{backgroundColor: 'red', flex: 1}}>
         <FlatList
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           data={users}
-          renderItem={({item}) => (
-            <View style={styles.card}>
+          renderItem={({item, index}) => (
+            <View style={styles.card} key={index}>
               <TouchableOpacity
                 onPress={() => {
                   /* 1. Navigate to the Details route with params */
                   navigation.navigate(Localization.t('FavoritePlaces'), {
                     Item: item,
-                    otherParam: 'anything you want here',
                   });
                 }}>
-                <Text style={styles.title}>{item.userId}</Text>
+                <Icon
+                  name="person"
+                  type="material"
+                  color={'burlywood'}
+                  size={70}
+                  style={{alignSelf: 'flex-start'}}
+                />
+
                 <Text style={styles.title}>{item.userName}</Text>
-                {/* <Text style={styles.description}>
-                Latitude: {item.latitude.toFixed(5)}
-              </Text>
-              <Text style={styles.description}>
-                Longitude: {item.longitude.toFixed(5)}
-              </Text>
-              <Text style={styles.description}>{item.userName}</Text> */}
               </TouchableOpacity>
             </View>
           )}
@@ -92,7 +86,7 @@ function UserView({navigation}) {
   );
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   add: {
     backgroundColor: 'green',
     height: 50,
@@ -104,13 +98,7 @@ styles = StyleSheet.create({
     elevation: 20,
     borderRadius: 10,
   },
-  container: {
-    height: 50,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
+  container: {flex: 1, alignItems: 'strech'},
   Button: {
     backgroundColor: 'red',
     height: 50,
@@ -123,7 +111,7 @@ styles = StyleSheet.create({
     fontSize: 20,
   },
   card: {
-    backgroundColor: 'bisque',
+    backgroundColor: 'aliceblue',
     elevation: 4, // Add elevation for a shadow effect
     padding: 16,
     margin: 8,

@@ -1,23 +1,22 @@
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ActivityIndicator,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
-
 import React, {useState, useEffect} from 'react';
 import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 
 function Myplace({navigation}) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [users, setUsers] = useState([]); // Initial empty array of users
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
-  console.log('heo', user?.uid);
+
   useEffect(() => {
     const subscriber = firestore()
       .collection('UserMyPlaces')
@@ -46,27 +45,31 @@ function Myplace({navigation}) {
   }
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      {/* <Button onPress={() => navigation.goBack()} title="Go back home" /> */}
-      {/* <View style={styles.container}>
-        <Text style={styles.text}>placeName </Text>
-        <Text style={styles.text}>Latitude: </Text>
-        <Text style={styles.text}>Longitude: </Text>
-        <Text style={styles.text}>userId: </Text>
-      </View> */}
-      <View Style={{backgroundColor: 'red', flex: 1}}>
+    <View style={{flex: 1, alignItems: 'strech', justifyContent: 'center'}}>
+      <View>
         <FlatList
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           data={users}
           renderItem={({item}) => (
             <View style={styles.card}>
-              <Text style={styles.title}>{item.placeName}</Text>
-              <Text style={styles.description}>
-                Latitude: {item.latitude.toFixed(5)}
-              </Text>
-              <Text style={styles.description}>
-                Longitude: {item.longitude.toFixed(5)}
-              </Text>
-              <Text style={styles.description}>{item.userName}</Text>
+              <View style={styles.division}>
+                <Text style={styles.title}>{item.placeName}</Text>
+                <Text style={styles.description}>
+                  Latitude: {item.latitude.toFixed(5)}
+                </Text>
+                <Text style={styles.description}>
+                  Longitude: {item.longitude.toFixed(5)}
+                </Text>
+                <Text style={styles.description}>{item.userName}</Text>
+              </View>
+              <Icon
+                name="map"
+                type="material"
+                color={'gold'}
+                size={70}
+                style={{alignSelf: 'flex-start'}}
+              />
             </View>
           )}
         />
@@ -80,7 +83,11 @@ function Myplace({navigation}) {
   );
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  division: {
+    flex: 1,
+    flexDirection: 'column',
+  },
   add: {
     backgroundColor: 'mediumaquamarine',
     height: 50,
@@ -111,11 +118,12 @@ styles = StyleSheet.create({
     fontSize: 20,
   },
   card: {
-    backgroundColor: 'bisque',
+    backgroundColor: 'aliceblue',
     elevation: 4, // Add elevation for a shadow effect
     padding: 16,
     margin: 8,
     borderRadius: 8,
+    flexDirection: 'row',
   },
   title: {
     color: 'black',

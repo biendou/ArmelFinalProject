@@ -1,9 +1,9 @@
 import {Marker, Callout} from 'react-native-maps';
 import {Icon} from 'react-native-elements';
-import {View, Text, Button, Touchable} from 'react-native';
-import {useEffect, useState} from 'react';
+import {View, Text, Button, Touchable, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {reset} from '../../../redux/slices/message';
+
 const mapMarkers = (
   chatRef,
   markers = [
@@ -28,45 +28,9 @@ const mapMarkers = (
   ],
 ) => {
   const dispatch = useDispatch();
-  const messages = useSelector(state => state.messR.message);
   const counter = useSelector(state => state.messR.counter);
-  console.log('counter', counter);
-  // markers.forEach(item => {
-  //   console.log(
-  //     'item',
-  //     item.userId,
-  //     counter.some(item2 => {
-  //       console.log(
-  //         'item2',
-  //         item2.id,
-  //         'Item',
-  //         item.userId,
-  //         item2.id === item.userId,
-  //       );
-  //       return item2.id === item.userId;
-  //     }),
-  //   );
-  // });
 
-  const userIdRedux = JSON.parse(
-    useSelector(state => state?.userR?.userID),
-  ).uid;
-  // console.log('userId', user);
-
-  const [channellist, setChannels] = useState([]);
-  const [fMarkers, setFMarkers] = useState([]);
-  useEffect(() => {
-    const channels = [];
-    messages.forEach(item => {
-      if (!channels.includes(item.publisher) && item.channel === userIdRedux) {
-        channels.push(item.publisher);
-      }
-    });
-    setChannels(channels);
-    // console.log('channels=======================================>', channels);
-  }, [messages]);
-
-  return markers.map((marker, index, channels) => (
+  return markers.map((marker, index) => (
     <Marker
       // style={{width: 100, height: 100, backgroundColor: 'red'}}
       key={index}
@@ -78,7 +42,7 @@ const mapMarkers = (
       }}
       title={marker.userName}
       description={JSON.stringify(marker.speed)}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.container}>
         <Icon name="thunderstorm" type="material" color={marker.userColor} />
         {counter.some(item => {
           console.log(
@@ -92,7 +56,7 @@ const mapMarkers = (
         }) && (
           <>
             <Icon
-              style={{positionTop: -30}}
+              style={styles.icon}
               name="sms"
               type="material"
               color={'red'}
@@ -107,18 +71,7 @@ const mapMarkers = (
           </>
         )}
       </View>
-      <Text
-        style={{
-          color: 'black',
-          fontSize: 10,
-          textShadowColor: 'white',
-          textShadowRadius: 20,
-          textShadowOffset: {width: -1, height: 1},
-          shadowOpacity: 1,
-          elevation: 1,
-        }}>
-        {marker.userName}
-      </Text>
+      <Text style={styles.text}>{marker.userName}</Text>
       <Callout
         tooltip={true}
         onPress={() => {
@@ -133,4 +86,18 @@ const mapMarkers = (
   ));
 };
 
+const styles = StyleSheet.create({
+  container: {flexDirection: 'row'},
+  icon: {positionTop: -30},
+
+  text: {
+    color: 'black',
+    fontSize: 10,
+    textShadowColor: 'white',
+    textShadowRadius: 20,
+    textShadowOffset: {width: -1, height: 1},
+    shadowOpacity: 1,
+    elevation: 1,
+  },
+});
 export default mapMarkers;

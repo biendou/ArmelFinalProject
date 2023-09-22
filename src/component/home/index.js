@@ -1,14 +1,10 @@
 import {useRef, useEffect, useState} from 'react';
 import {
   View,
-  Button,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Text,
   ToastAndroid,
-  Modal,
-  Alert,
 } from 'react-native';
 import {Localization} from '../../helpers';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
@@ -16,10 +12,10 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'; // remove PROVIDER_G
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {getCurrentPosition} from '../../helpers/geolocation';
-import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import Config from 'react-native-config';
 import {Icon} from 'react-native-elements';
 import mapMarkers from './markers';
-import {Marker} from 'react-native-maps';
+
 import Chat from './chat';
 
 const postdata = (data, user) => {
@@ -43,7 +39,6 @@ const postdata = (data, user) => {
 
 function HomeScreen({navigation}) {
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
-
   const chat = useRef(null);
   const [refresh, setRefresh] = useState(false);
   const [position, setPosition] = useState(null);
@@ -53,8 +48,13 @@ function HomeScreen({navigation}) {
     latitudeDelta: 0.015,
     longitudeDelta: 0.0121,
   });
+  console.log(
+    '================================>location',
+    Config,
+    '====================>',
+    Config.googleapikey,
+  );
   const load = useRef(null);
-  const ref = useRef();
 
   useEffect(() => {
     const subscriber = firestore()
@@ -88,23 +88,14 @@ function HomeScreen({navigation}) {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.mainContainer}>
       <MapView provider={PROVIDER_GOOGLE} style={styles.map} region={location}>
         {position ? mapMarkers(chat, position) : mapMarkers()}
       </MapView>
       <View style={styles.organizer}>
-        <View style={{flexDirection: 'row', backgroundColor: 'black'}}>
+        <View style={styles.subContainer1}>
           <TouchableOpacity
-            style={{
-              backgroundColor: 'black',
-              height: 44,
-              borderRadius: 5,
-              paddingVertical: 5,
-              width: 30,
-              position: 'relative',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={styles.drawerButton}
             onPress={() => navigation.openDrawer()}>
             <Icon name="menu" type="material" color="white" />
           </TouchableOpacity>
@@ -117,53 +108,7 @@ function HomeScreen({navigation}) {
             autoFocus={false}
             returnKeyType={'default'}
             fetchDetails={true}
-            styles={{
-              container: {
-                flexGrow: 1,
-                position: 'absolute',
-                backgroundColor: 'black',
-                position: 'relative',
-              },
-              textInputContainer: {
-                flexDirection: 'row',
-              },
-              textInput: {
-                color: 'black',
-                backgroundColor: '#FFFFFF',
-                height: 44,
-                borderRadius: 5,
-                paddingVertical: 5,
-                paddingHorizontal: 10,
-                fontSize: 15,
-                flex: 1,
-              },
-              poweredContainer: {
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-                borderBottomRightRadius: 5,
-                borderBottomLeftRadius: 5,
-                borderColor: '#c8c7cc',
-                borderTopWidth: 0.5,
-              },
-              powered: {},
-              listView: {},
-              row: {
-                backgroundColor: '#FFFFFF',
-                padding: 13,
-                height: 44,
-                flexDirection: 'row',
-              },
-              separator: {
-                height: 0.5,
-                backgroundColor: '#c8c7cc',
-              },
-              description: {color: 'black'},
-              loader: {
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                height: 20,
-              },
-            }}
+            styles={styleSearchBar}
             onPress={(data, details = null) => {
               // 'details' is provided when fetchDetails = true
 
@@ -179,7 +124,7 @@ function HomeScreen({navigation}) {
               };
             }}
             query={{
-              key: 'AIzaSyD-kAyJVWxMBF1M0hFf8LnZsXRdEUk2YAI',
+              key: Config.GOOGLE_API_KEY,
               language: Localization.t('language'),
             }}
           />
@@ -205,7 +150,70 @@ function HomeScreen({navigation}) {
     </View>
   );
 }
+
+const styleSearchBar = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    position: 'absolute',
+    backgroundColor: 'black',
+    position: 'relative',
+  },
+  textInputContainer: {
+    flexDirection: 'row',
+  },
+  textInput: {
+    color: 'black',
+    backgroundColor: '#FFFFFF',
+    height: 44,
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    fontSize: 15,
+    flex: 1,
+  },
+  poweredContainer: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderColor: '#c8c7cc',
+    borderTopWidth: 0.5,
+  },
+  powered: {},
+  listView: {},
+  row: {
+    backgroundColor: '#FFFFFF',
+    padding: 13,
+    height: 44,
+    flexDirection: 'row',
+  },
+  separator: {
+    height: 0.5,
+    backgroundColor: '#c8c7cc',
+  },
+  description: {color: 'black'},
+  loader: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 20,
+  },
+});
+
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
+  subContainer1: {flexDirection: 'row', backgroundColor: 'black'},
+  drawerButton: {
+    backgroundColor: 'black',
+    height: 44,
+    borderRadius: 5,
+    paddingVertical: 5,
+    width: 30,
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   add: {
     backgroundColor: 'mediumaquamarine',
     height: 50,

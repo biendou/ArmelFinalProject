@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import Config from 'react-native-config';
 
 export const messageSlice = createSlice({
   name: 'message',
@@ -22,21 +23,22 @@ export const messageSlice = createSlice({
       //// update counter
       if (
         ('10k9jl8tJfctGzd7IjrNcSCvRAJ2' === action.payload.channel ||
-          'ITC' === action.payload.channel) &&
+          Config.PUBNUB_COMMON_CHANNEL === action.payload.channel) &&
         action.payload.publisher !== '10k9jl8tJfctGzd7IjrNcSCvRAJ2'
       ) {
         if (
           state.counter.some(
             item =>
               item.id === action.payload.publisher ||
-              (item.id === 'ITC' && action.payload.channel === 'ITC'),
+              (item.id === Config.PUBNUB_COMMON_CHANNEL &&
+                action.payload.channel === Config.PUBNUB_COMMON_CHANNEL),
           )
         ) {
           state.counter = state.counter.map(item => {
             if (
               (item.id === action.payload.publisher && item.available) ||
-              (item.id === 'ITC' &&
-                action.payload.channel === 'ITC' &&
+              (item.id === Config.PUBNUB_COMMON_CHANNEL &&
+                action.payload.channel === Config.PUBNUB_COMMON_CHANNEL &&
                 item.available)
             ) {
               return {
@@ -48,7 +50,7 @@ export const messageSlice = createSlice({
             return item;
           });
         } else {
-          if (action.payload.channel === 'ITC') {
+          if (action.payload.channel === Config.PUBNUB_COMMON_CHANNEL) {
             state.counter.push({
               id: action.payload.channel,
               count: 1,

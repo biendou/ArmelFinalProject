@@ -22,16 +22,15 @@ import {usePubNub} from 'pubnub-react';
 import {update} from '../../redux/slices/message';
 
 import firestore from '@react-native-firebase/firestore';
+import Config from 'react-native-config';
 
 const Logout = ({navigation}) => {
   navigation.goBack();
 };
 
 function CustomDrawerContent(props) {
-  // const [update, setUpdate] = React.useState(false);
   const dispatch = useDispatch();
   const LocalizationUpdate = () => {
-    // setUpdate(!update);
     if (Localization.locale === 'en') {
       Localization.locale = 'fr';
       dispatch(setLang('fr'));
@@ -39,7 +38,6 @@ function CustomDrawerContent(props) {
       Localization.locale = 'en';
       dispatch(setLang('en'));
     }
-    console.log('hello');
   };
   return (
     <DrawerContentScrollView {...props}>
@@ -55,7 +53,6 @@ function CustomDrawerContent(props) {
           label={Localization.t('logout')}
           onPress={() => {
             logout();
-            console.log('bye!');
           }}
         />
         <DrawerItem
@@ -77,11 +74,10 @@ const Drawer = createDrawerNavigator();
 const App = () => {
   const pubnub = usePubNub();
   const dispatch = useDispatch();
-  const [channels, setChannels] = useState(['ITC']);
+  const [channels, setChannels] = useState([Config.PUBNUB_COMMON_CHANNEL]);
   const value = useSelector(state => state.messR.counter).find(
-    element => element.id === 'ITC',
+    element => element.id === Config.PUBNUB_COMMON_CHANNEL,
   )?.count;
-  console.log('#####################value', value);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -95,13 +91,13 @@ const App = () => {
             key: documentSnapshot.id,
           });
         });
-        const userID = ['ITC'];
+        const userID = [Config.PUBNUB_COMMON_CHANNEL];
         data.forEach(item => {
           if (!userID.includes(item.userId)) {
             userID.push(item.userId);
           }
         });
-        console.log('userID', userID);
+
         setChannels(userID);
       });
 
@@ -150,14 +146,14 @@ const App = () => {
         options={{unmountOnBlur: true}}
       />
       <Drawer.Screen
-        name={Localization.t('Itccommunication')}
+        name={Localization.t(Config.PUBNUB_COMMON_CHANNEL)}
         component={Itccommunication}
         options={{
           unmountOnBlur: true,
           drawerLabel: props => (
             <View style={{flexDirection: 'row'}}>
               <Text style={{color: 'black'}}>
-                {Localization.t('Itccommunication')}
+                {Localization.t(Config.PUBNUB_COMMON_CHANNEL)}
               </Text>
               {value > 0 && (
                 <Text

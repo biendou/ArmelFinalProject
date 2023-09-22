@@ -4,13 +4,14 @@ import {
   Button,
   StyleSheet,
   ActivityIndicator,
+  TouchableOpacity,
   FlatList,
 } from 'react-native';
-
+import {Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
 import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
 import {useSelector} from 'react-redux';
 
 function NotificationsScreen({route, navigation}) {
@@ -48,9 +49,11 @@ function NotificationsScreen({route, navigation}) {
   }
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <View Style={{backgroundColor: 'red', flex: 1}}>
+    <View style={{flex: 1, alignItems: 'strech'}}>
+      <View>
         <FlatList
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           data={users}
           renderItem={({item}) => (
             <View style={styles.card}>
@@ -62,6 +65,13 @@ function NotificationsScreen({route, navigation}) {
                     otherParam: 'anything you want here',
                   });
                 }}>
+                <Icon
+                  name="map"
+                  type="material"
+                  color={'blue'}
+                  size={70}
+                  style={{alignSelf: 'flex-end'}}
+                />
                 <Text style={styles.title}>{item.placeName}</Text>
                 <Text style={styles.description}>
                   Latitude: {item.latitude.toFixed(5)}
@@ -79,7 +89,7 @@ function NotificationsScreen({route, navigation}) {
   );
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   add: {
     backgroundColor: 'green',
     height: 50,

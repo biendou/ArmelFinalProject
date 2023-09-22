@@ -26,14 +26,15 @@ import Video from './src/component/video';
 import {permission} from './src/helpers/permissions';
 
 ////
+import Config from 'react-native-config';
 
 import PubNub from 'pubnub';
 import {PubNubProvider} from 'pubnub-react';
 
 const pubnub = new PubNub({
-  publishKey: 'pub-c-f2919219-ac20-4403-b537-a678b79b4381',
-  subscribeKey: 'sub-c-c5ddc634-c6fc-11e7-afd4-56ea5891403c',
-  uuid: '10k9jl8tJfctGzd7IjrNcSCvRAJ2',
+  publishKey: Config.PUBNUB_PUBLISH_KEY,
+  subscribeKey: Config.PUBNUB_SUBSCRIBE_KEY,
+  uuid: Config.PUBNUB_UUID,
 });
 
 const App = () => {
@@ -71,7 +72,6 @@ const Main = () => {
   const [user, setUser] = useState();
   const dispatch = useDispatch();
   const lang = useSelector(state => state.langR.lang);
-  console.log('######', lang);
 
   // Handle user state changes
   function onAuthStateChanged(user) {

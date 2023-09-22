@@ -126,10 +126,13 @@ const Chat = (props, ref) => {
             // opacity: 0,
           }}>
           <FlatList
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             style={{width: '80%', marginTop: 4}}
             data={usermessage}
-            renderItem={({item}) => (
+            renderItem={({item, index}) => (
               <Item
+                key={index}
                 title={item?.message}
                 position={item.publisher === userIdRedux}
               />
