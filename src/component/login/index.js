@@ -9,10 +9,13 @@ import {
 } from 'react-native';
 import {login as loginapi} from '../../api';
 import {Localization} from '../../helpers';
+import Config from 'react-native-config';
 
 const Login = ({navigation}) => {
-  const [email, setEmail] = useState('biendou@example.com'); //
-  const [password, setPassword] = useState('SuperSecretPassword!'); //'SuperSecretPassword!'
+  const [email, setEmail] = useState(Config.DEVELOPMENT_SAVE_EMAIL); //
+  const [password, setPassword] = useState(
+    Config.DEVELOPMENT_SAVE_EMAIL_PASSWORD,
+  ); //'SuperSecretPassword!'
 
   return (
     <SafeAreaView style={styles.container}>

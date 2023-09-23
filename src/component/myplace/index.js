@@ -11,6 +11,7 @@ import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
+import Config from 'react-native-config';
 
 function Myplace({navigation}) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -19,7 +20,7 @@ function Myplace({navigation}) {
 
   useEffect(() => {
     const subscriber = firestore()
-      .collection('UserMyPlaces')
+      .collection(Config.FIREBASE_COLLECTION_FAVORITES_PLACES)
       .where('userId', '==', user?.uid)
       .onSnapshot(querySnapshot => {
         const users = [];
@@ -32,7 +33,7 @@ function Myplace({navigation}) {
         });
 
         setUsers(users);
-        console.log(users);
+
         setLoading(false);
       });
 

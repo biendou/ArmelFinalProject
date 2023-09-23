@@ -11,15 +11,16 @@ import React, {useState, useEffect} from 'react';
 import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
+import Config from 'react-native-config';
 
 function UserView({navigation}) {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [users, setUsers] = useState([]); // Initial empty array of users
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
-  console.log('heo', user?.uid);
+
   useEffect(() => {
     const subscriber = firestore()
-      .collection('UserMyPlaces')
+      .collection(Config.FIREBASE_COLLECTION_FAVORITES_PLACES)
       .onSnapshot(querySnapshot => {
         const data = [];
 
@@ -40,7 +41,7 @@ function UserView({navigation}) {
         });
 
         setUsers(Items);
-        console.log(userID);
+
         setLoading(false);
       });
 

@@ -11,7 +11,7 @@ import {Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
 import {Localization} from '../../helpers';
 import firestore from '@react-native-firebase/firestore';
-
+import Config from 'react-native-config';
 import {useSelector} from 'react-redux';
 
 function NotificationsScreen({route, navigation}) {
@@ -23,7 +23,7 @@ function NotificationsScreen({route, navigation}) {
   const user = JSON.parse(useSelector(state => state?.userR?.userID));
   useEffect(() => {
     const subscriber = firestore()
-      .collection('UserMyPlaces')
+      .collection(Config.FIREBASE_COLLECTION_FAVORITES_PLACES)
       .where('userId', '==', Item.userId)
       .onSnapshot(querySnapshot => {
         const data = [];
@@ -36,7 +36,6 @@ function NotificationsScreen({route, navigation}) {
         });
 
         setUsers(data);
-        console.log(data);
         setLoading(false);
       });
 

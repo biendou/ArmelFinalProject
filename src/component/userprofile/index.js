@@ -11,18 +11,18 @@ import Slider from './colorpicker';
 import Localisation from '../../helpers/localization';
 import firestore from '@react-native-firebase/firestore';
 import {Icon} from 'react-native-elements';
+import Config from 'react-native-config';
 
 const changeinput1 = (seteditable, editable, value) => {
   if (editable) {
     seteditable(!editable);
     firestore()
-      .collection('UsersPosition')
-      .doc('userIdBiendouYepdieu')
+      .collection(Config.FIREBASE_COLLECTION_SHARE_POSITION_BY_USERS)
+      .doc(Config.FIREBASE_DOCUMENT_SHARE_POSITION_BY_USERS)
       .update({
         firstName: value,
       })
       .then(() => {
-        console.log('User updated!');
         ToastAndroid.show(Localisation.t('userupdated'), ToastAndroid.SHORT);
       });
   }
@@ -32,13 +32,12 @@ const changeinput1 = (seteditable, editable, value) => {
 const changeinput2 = (seteditable, editable, value) => {
   if (editable) {
     firestore()
-      .collection('UsersPosition')
-      .doc('userIdBiendouYepdieu')
+      .collection(Config.FIREBASE_COLLECTION_SHARE_POSITION_BY_USERS)
+      .doc(Config.FIREBASE_DOCUMENT_SHARE_POSITION_BY_USERS)
       .update({
         lastName: value,
       })
       .then(() => {
-        console.log('User updated!');
         ToastAndroid.show(Localisation.t('userupdated'), ToastAndroid.SHORT);
       });
   }
@@ -47,8 +46,8 @@ const changeinput2 = (seteditable, editable, value) => {
 
 const getdata = async () => {
   return await firestore()
-    .collection('UsersPosition')
-    .doc('userIdBiendouYepdieu')
+    .collection(Config.FIREBASE_COLLECTION_SHARE_POSITION_BY_USERS)
+    .doc(Config.FIREBASE_DOCUMENT_SHARE_POSITION_BY_USERS)
     .get();
 };
 
@@ -66,13 +65,10 @@ const UserProfile = () => {
         setInput1(userDocument._data.firstName);
         setInput2(userDocument._data.lastName);
         setColorinit(userDocument._data.userColor);
-        console.log(userDocument._data, '============>', colorinit);
+
         setReady1(true);
       })
-      .catch(error => {
-        console.log(error);
-      });
-    // console.log(userDocument);
+      .catch(error => {});
   }, []);
 
   if (!ready1) {

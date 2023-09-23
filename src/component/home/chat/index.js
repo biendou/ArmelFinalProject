@@ -60,7 +60,7 @@ const Chat = (props, ref) => {
   const dispatch = useDispatch();
   const userIdRedux = JSON.parse(
     useSelector(state => state?.userR?.userID),
-  ).uid;
+  )?.uid;
   const messages = useSelector(state => state.messR.message);
 
   const pubnub = usePubNub();
@@ -132,7 +132,7 @@ const Chat = (props, ref) => {
             data={usermessage}
             renderItem={({item, index}) => (
               <Item
-                key={index}
+                key={index + item?.timetoken}
                 title={item?.message}
                 position={item.publisher === userIdRedux}
               />

@@ -20,7 +20,7 @@ import Chat from './chat';
 
 const postdata = (data, user) => {
   firestore()
-    .collection('UserMyPlaces')
+    .collection(Config.FIREBASE_COLLECTION_FAVORITES_PLACES)
     .add({
       userId: user?.uid,
       userName: user?.email,
@@ -58,7 +58,7 @@ function HomeScreen({navigation}) {
 
   useEffect(() => {
     const subscriber = firestore()
-      .collection('UsersPosition')
+      .collection(Config.FIREBASE_COLLECTION_SHARE_POSITION_BY_USERS)
       .onSnapshot(querySnapshot => {
         const positions = [];
 

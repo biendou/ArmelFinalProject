@@ -17,7 +17,7 @@ import ColorPicker, {
   OpacitySlider,
   HueSlider,
 } from 'reanimated-color-picker';
-import {Localization} from '../../helpers';
+import Config from 'react-native-config';
 
 export default function App({init, set}) {
   const [showModal, setShowModal] = useState(false);
@@ -29,8 +29,8 @@ export default function App({init, set}) {
   const onOk = () => {
     setShowModal(false);
     firestore()
-      .collection('UsersPosition')
-      .doc('userIdBiendouYepdieu')
+      .collection(Config.FIREBASE_COLLECTION_SHARE_POSITION_BY_USERS)
+      .doc(Config.FIREBASE_DOCUMENT_SHARE_POSITION_BY_USERS)
       .update({
         userColor: color,
       })
